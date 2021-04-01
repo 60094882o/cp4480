@@ -1,22 +1,22 @@
-let axios = require('axios')
+// let axios = require("axios")
 
-let token =""
+// let token =""
 
-let params = {Authorization: `Bearer ${token}`}
+// let params = {Authorization: `Bearer ${token}`}
 
-let cat = {name:"cat", says:"meow"}
-let dog = {name:"dog", says:"woof"}
+// let cat = {name:"cat", says:"meow"}
+// let dog = {name:"dog", says:"woof"}
 
-let login = async() => {
-    let login = await axios.post('http://localhost:3000/api/login',{username:"admin",password:"password"})
-    token = login.data
-}
+// let login = async() => {
+// 	let login = await axios.post("http://localhost:3000/api/login",{username:"admin",password:"password"})
+// 	token = login.data
+// }
 
-let post = async() => {
-    await axios.post("http://localhost:3000/api/animals",cat,{
-        params,
-    })
-}
+// let post = async() => {
+// 	await axios.post("http://localhost:3000/api/animals",cat,{
+// 		params,
+// 	})
+// }
 
 // let postagain = async() => {
 //     await axios.post('http://localhost:3000/api/animals',params,dog)
@@ -28,7 +28,7 @@ let post = async() => {
 // }
 
 
-login()
-post()
+// login()
+// post()
 // postagain()
 // read()

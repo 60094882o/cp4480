@@ -9,5 +9,10 @@ pipeline {
                 sh 'npm i' 
             }
         }
+        stage('Testing') { 
+            steps { 
+                sh 'eslint *.js' 
+            }
+        }
     }
 }
