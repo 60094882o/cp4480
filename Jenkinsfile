@@ -9,10 +9,5 @@ pipeline {
                 sh 'npm i' 
             }
         }
-        stage('Deploy') {
-            steps {
-                sh 'node server.js'
-            }
-        }
     }
 }
