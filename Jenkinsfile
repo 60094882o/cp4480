@@ -6,12 +6,17 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
-                sh 'npm i' 
+                sh 'npm i'
             }
         }
-        stage('Testing') { 
+        stage('Test') { 
             steps { 
                 sh 'eslint *.js' 
+            }
+        }
+        stage('Deploy') { 
+            steps { 
+                sh './deploy.sh'
             }
         }
     }
