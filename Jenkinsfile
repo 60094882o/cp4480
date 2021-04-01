@@ -6,7 +6,12 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
-                sh 'node server.js' 
+                sh 'npm i' 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'node server.js'
             }
         }
     }
