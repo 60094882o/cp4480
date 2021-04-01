@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo deploying messaging app client files
-rm /var/www/deploy/cp4480project/client -r
-rm /opt/deploy/cp4480project/server -r
+rm /var/www/deploy/cp4480project/client/ -r
+rm /opt/deploy/cp4480project/server/ -r
 
 mkdir /var/www/deploy/cp4480project/client
 mkdir /opt/deploy/cp4480project/server
