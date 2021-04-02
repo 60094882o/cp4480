@@ -21,10 +21,6 @@ let con = mysql.createConnection({
 	database: DATABASE
 })
 
-console.log("omartest", bcrypt.hashSync("omartest", 12))
-console.log("ahmedtest", bcrypt.hashSync("ahmedtest", 12))
-console.log("kareemtest", bcrypt.hashSync("kareemtest", 12))
-
 app.get("/", (req, res) => {
 	console.log("Connected!")
 	con.query("select * from users;", (e, users) => {
@@ -123,6 +119,7 @@ app.post("/api/logout", (req, res) => {
 	res.send("ok")
 })
 
+console.log(`BEFORE THE LISTEN ${PORT}`)
 app.listen(PORT, () => {
 	console.log(`The application has started on ${PORT}`)
 })
