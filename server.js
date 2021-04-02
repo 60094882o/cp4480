@@ -50,7 +50,7 @@ app.post("/api/login", async (req, res) => {
 
 			if (user) {
 				let userInfo = {
-					name: u,
+					id: user.id,
 					role: user.role
 				}
 				let token = jwt.sign(userInfo, SECRETKEY)
@@ -69,22 +69,14 @@ app.post("/api/login", async (req, res) => {
 app.get("/api/messages", async (req, res) => {
 	try {
 		let token = req.headers["authorization"].split(" ")[1]
-		jwt.verify(token, SECRETKEY)
+		token = jwt.verify(token, SECRETKEY)
 
-		let sql = "select * from users where messages.userid = users.id"
-		con.query(sql, (err, result) => {
+		let sql = `select * from messages where messages.userid = ${token.id}`
+		con.query(sql, (err, messages) => {
 			if (err) throw err
 			res.status(200)
-			res.send(result)
+			res.send(messages)
 		})
-
-		// if (token.name) {
-
-		// } else {
-
-		// }
-
-		res.send("ok")
 	}
 	catch (e) {
 		res.status(401)
