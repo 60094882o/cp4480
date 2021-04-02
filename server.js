@@ -11,6 +11,9 @@ const DATABASE = process.env.DATABASE
 const PASSWORD = process.env.PASSWORD
 const SECRETKEY = process.env.SECRETKEY
 
+
+console.log("PASSWORD", DATABASE)
+
 app.use(express.json())
 app.use(express.static("webfiles"))
 
