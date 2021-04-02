@@ -14,13 +14,15 @@ const SECRETKEY = process.env.SECRETKEY
 app.use(express.json())
 app.use(express.static("webfiles"))
 
-async function wrapper() {
-	let con = await mysql.createConnection({
-		host: "localhost",
-		user: "omar",
-		password: PASSWORD,
-		database: DATABASE
-	})
+
+let con = mysql.createConnection({
+	host: "localhost",
+	user: "omar",
+	password: PASSWORD,
+	database: DATABASE
+}).then(connected)
+
+const connected = async () => {
 
 	app.get("/", async (req, res) => {
 		console.log("Connected!")
@@ -90,10 +92,8 @@ async function wrapper() {
 	app.post("/api/logout", (req, res) => {
 		res.send("ok")
 	})
-
-
-	app.listen(port, () => {
-		console.log("The application has started")
-	})
 }
-wrapper()
+
+app.listen(port, () => {
+	console.log("The application has started")
+})
