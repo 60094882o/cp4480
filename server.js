@@ -14,14 +14,6 @@ const SECRETKEY = process.env.SECRETKEY
 app.use(express.json())
 app.use(express.static("webfiles"))
 
-
-let con = mysql.createConnection({
-	host: "localhost",
-	user: "omar",
-	password: PASSWORD,
-	database: DATABASE
-}).then(connected)
-
 const connected = async () => {
 
 	app.get("/", async (req, res) => {
@@ -93,6 +85,13 @@ const connected = async () => {
 		res.send("ok")
 	})
 }
+
+let con = mysql.createConnection({
+	host: "localhost",
+	user: "omar",
+	password: PASSWORD,
+	database: DATABASE
+}).then(connected)
 
 app.listen(port, () => {
 	console.log("The application has started")
