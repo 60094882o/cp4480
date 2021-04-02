@@ -14,7 +14,8 @@ const SECRETKEY = process.env.SECRETKEY
 app.use(express.json())
 app.use(express.static("webfiles"))
 
-let con = mysql.createConnection({
+(async()=>{
+let con = await mysql.createConnection({
     host: "localhost",
     user: "omar",
     password: PASSWORD,
@@ -98,4 +99,4 @@ app.post("/api/logout", (req, res) => {
 app.listen(port, () => {
     console.log("The application has started")
 })
-
+})()
