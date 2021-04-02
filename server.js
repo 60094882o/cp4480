@@ -124,5 +124,5 @@ app.post("/api/logout", (req, res) => {
 })
 
 app.listen(PORT, () => {
-	console.log("The application has started")
+	console.log(`The application has started on ${PORT}`)
 })
