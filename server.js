@@ -4,7 +4,7 @@ const app = express()
 const bcrypt = require("bcrypt")
 const dotenv = require("dotenv")
 const port = 3000
-const mysql = require("promise-mysql")
+const mysql = require("mysql")
 dotenv.config()
 
 const DATABASE = process.env.DATABASE
@@ -14,84 +14,87 @@ const SECRETKEY = process.env.SECRETKEY
 app.use(express.json())
 app.use(express.static("webfiles"))
 
-const connected = async () => {
-
-	app.get("/", async (req, res) => {
-		console.log("Connected!")
-		let users = await con.query("select * from users;")
-		res.status(200)
-		res.send(users)
-	})
-
-	app.post("/api/login", async (req, res) => {
-		console.log(req.body)
-		let u = req.body.username
-		let p = req.body.password
-		if (!u || !p) {
-			res.status(400)
-			res.send("Bad Request")
-			return
-		}
-
-		let users = await con.query("select * from users;")
-
-		let user = users.find(user => user.username === u && bcrypt.compareSync(p, user.password))
-
-		if (user) {
-			let userInfo = {
-				name: u,
-				role: user.role
-			}
-			let token = jwt.sign(userInfo, SECRETKEY)
-			res.send(token)
-			res.status(200)
-			return
-		} else {
-			res.status(404)
-			res.send("not found")
-		}
-
-		res.status(401)
-		res.send("not authorized")
-	})
-
-	app.get("/api/messages", async (req, res) => {
-		try {
-			let token = req.headers["authorization"].split(" ")[1]
-			jwt.verify(token, SECRETKEY)
-
-			let sql = "select * from users where messages.userid = users.id"
-			con.query(sql, (err, result) => {
-				if (err) throw err
-				res.status(200)
-				res.send(result)
-			})
-
-			// if (token.name) {
-
-			// } else {
-
-			// }
-
-			res.send("ok")
-		}
-		catch (e) {
-			res.status(401)
-			res.send("not authorized")
-		}
-	})
-
-	app.post("/api/logout", (req, res) => {
-		res.send("ok")
-	})
-}
-
 let con = mysql.createConnection({
 	host: "localhost",
 	user: "omar",
 	password: PASSWORD,
 	database: DATABASE
-}).then(connected)
+})
+
+app.get("/", async (req, res) => {
+	console.log("Connected!")
+	con.query("select * from users;", (e, users) => {
+		if (e) throw e
+		if (users.length > 0) {
+			res.status(200)
+			res.send(users)
+		}
+	})
+})
+
+app.post("/api/login", async (req, res) => {
+	console.log(req.body)
+	let u = req.body.username
+	let p = req.body.password
+	if (!u || !p) {
+		res.status(400)
+		res.send("Bad Request")
+		return
+	}
+
+	con.query("select * from users;", (e, users) => {
+		if (e) throw e
+		if (users.length > 0) {
+
+			let user = users.find(user => user.username === u && bcrypt.compareSync(p, user.password))
+
+			if (user) {
+				let userInfo = {
+					name: u,
+					role: user.role
+				}
+				let token = jwt.sign(userInfo, SECRETKEY)
+				res.send(token)
+				res.status(200)
+				return
+			} else {
+				res.status(401)
+				res.send("not authorized")
+				return
+			}
+		}
+	})
+})
+
+app.get("/api/messages", async (req, res) => {
+	try {
+		let token = req.headers["authorization"].split(" ")[1]
+		jwt.verify(token, SECRETKEY)
+
+		let sql = "select * from users where messages.userid = users.id"
+		con.query(sql, (err, result) => {
+			if (err) throw err
+			res.status(200)
+			res.send(result)
+		})
+
+		// if (token.name) {
+
+		// } else {
+
+		// }
+
+		res.send("ok")
+	}
+	catch (e) {
+		res.status(401)
+		res.send("not authorized")
+	}
+})
+
+app.post("/api/logout", (req, res) => {
+	res.send("ok")
+})
 
 app.listen(port, () => {
 	console.log("The application has started")
