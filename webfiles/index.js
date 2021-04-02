@@ -9,10 +9,10 @@ const setGlobalHeaders = () => {
 }
 
 const login = () => {
-    let email = $('#email').val()
+    let username = $('#username').val()
     let password = $('#password').val()
     let data = {
-        username: email,
+        username: username,
         password: password
     }
     $.ajax('/api/login',{
