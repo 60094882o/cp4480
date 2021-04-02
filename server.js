@@ -11,93 +11,89 @@ const DATABASE = process.env.DATABASE
 const PASSWORD = process.env.PASSWORD
 const SECRETKEY = process.env.SECRETKEY
 
-
-console.log("PASSWORD", process.env.DATABASE)
-
 app.use(express.json())
 app.use(express.static("webfiles"))
 
 async function wrapper() {
-	let con = await mysql.createConnection({
-		host: "localhost",
-		user: "omar",
-		password: PASSWORD,
-		database: DATABASE
-	})
+    let con = await mysql.createConnection({
+        host: "localhost",
+        user: "omar",
+        password: PASSWORD,
+        database: DATABASE
+    })
 
-	app.get("/", async (req, res) => {
-		console.log("Connected!")
-		let users = await con.query("select * from users;")
-		res.status(200)
-		res.send(users)
-	})
+    app.get("/", async (req, res) => {
+        console.log("Connected!")
+        let users = await con.query("select * from users;")
+        res.status(200)
+        res.send(users)
+    })
 
-	app.post("/api/login", async (req, res) => {
-		console.log(req.body)
-		let u = req.body.username
-		let p = req.body.password
-		if (!u || !p) {
-			res.status(400)
-			res.send("Bad Request")
-			return
-		}
+    app.post("/api/login", async (req, res) => {
+        console.log(req.body)
+        let u = req.body.username
+        let p = req.body.password
+        if (!u || !p) {
+            res.status(400)
+            res.send("Bad Request")
+            return
+        }
 
-		let users = await con.query("select * from users;")
+        let users = await con.query("select * from users;")
 
-		let user = users.find(user => {
-			console.log("user.password", user.password)
-			console.log("comparison", bcrypt.compareSync(p, user.password))
-			return user.username === u && bcrypt.compareSync(p, user.password)
-		})
+        let user = users.find(user => user.username === u && bcrypt.compareSync(p, user.password))
 
-		if (user) {
-			let userInfo = {
-				name: u,
-				role: user.role
-			}
-			let token = jwt.sign(userInfo, SECRETKEY)
-			res.send(token)
-			res.status(200)
-			return
-		}
+        if (user) {
+            let userInfo = {
+                name: u,
+                role: user.role
+            }
+            let token = jwt.sign(userInfo, SECRETKEY)
+            res.send(token)
+            res.status(200)
+            return
+        } else {
+            res.status(404)
+            res.send("not found")
+        }
 
-		res.status(401)
-		res.send("not authorized")
-	})
+        res.status(401)
+        res.send("not authorized")
+    })
 
-	app.get("/api/messages", async (req, res) => {
-		try {
-			let token = req.headers["authorization"].split(" ")[1]
-			jwt.verify(token, SECRETKEY)
+    app.get("/api/messages", async (req, res) => {
+        try {
+            let token = req.headers["authorization"].split(" ")[1]
+            jwt.verify(token, SECRETKEY)
 
-			let sql = "select * from users where messages.userid = users.id"
-			con.query(sql, (err, result) => {
-				if (err) throw err
-				res.status(200)
-				res.send(result)
-			})
+            let sql = "select * from users where messages.userid = users.id"
+            con.query(sql, (err, result) => {
+                if (err) throw err
+                res.status(200)
+                res.send(result)
+            })
 
-			// if (token.name) {
+            // if (token.name) {
 
-			// } else {
+            // } else {
 
-			// }
+            // }
 
-			res.send("ok")
-		}
-		catch (e) {
-			res.status(401)
-			res.send("not authorized")
-		}
-	})
+            res.send("ok")
+        }
+        catch (e) {
+            res.status(401)
+            res.send("not authorized")
+        }
+    })
 
-	app.post("/api/logout", (req, res) => {
-		res.send("ok")
-	})
+    app.post("/api/logout", (req, res) => {
+        res.send("ok")
+    })
 
 
-	app.listen(port, () => {
-		console.log("The application has started")
-	})
+    app.listen(port, () => {
+        console.log("The application has started")
+    })
 }
 wrapper()
