@@ -54,8 +54,8 @@ app.post("/api/login", async (req, res) => {
 					role: user.role
 				}
 				let token = jwt.sign(userInfo, SECRETKEY)
+                res.header('Location',"/user.html")
 				res.send(token)
-				res.redirect("/user.html")
 				res.status(200)
 				return
 			} else {
