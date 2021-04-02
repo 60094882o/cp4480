@@ -22,6 +22,7 @@ const login = () => {
         success: (msg) => {
             token = msg
             setGlobalHeaders()
+            window.location.replace("/user.html");
         }
     })
 }
