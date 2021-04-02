@@ -3,13 +3,13 @@ const jwt = require("jsonwebtoken")
 const app = express()
 const bcrypt = require("bcrypt")
 const dotenv = require("dotenv")
-const port = 3000
 const mysql = require("mysql")
 dotenv.config()
 
 const DATABASE = process.env.DATABASE
 const PASSWORD = process.env.PASSWORD
 const SECRETKEY = process.env.SECRETKEY
+const PORT = process.env.PORT
 
 app.use(express.json())
 app.use(express.static("webfiles"))
@@ -21,7 +21,11 @@ let con = mysql.createConnection({
 	database: DATABASE
 })
 
-app.get("/", async (req, res) => {
+console.log("omartest", bcrypt.hashSync("omartest", 12))
+console.log("ahmedtest", bcrypt.hashSync("ahmedtest", 12))
+console.log("kareemtest", bcrypt.hashSync("kareemtest", 12))
+
+app.get("/", (req, res) => {
 	console.log("Connected!")
 	con.query("select * from users;", (e, users) => {
 		if (e) throw e
@@ -32,7 +36,7 @@ app.get("/", async (req, res) => {
 	})
 })
 
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", (req, res) => {
 	console.log(req.body)
 	let u = req.body.username
 	let p = req.body.password
@@ -70,8 +74,13 @@ app.get("/api/messages", async (req, res) => {
 	try {
 		let token = req.headers["authorization"].split(" ")[1]
 		token = jwt.verify(token, SECRETKEY)
+		let sql
+		if (token.role === "admin") {
+			sql = "select * from messages"
+		} else {
+			sql = `select * from messages where messages.userid = ${token.id}`
+		}
 
-		let sql = `select * from messages where messages.userid = ${token.id}`
 		con.query(sql, (err, messages) => {
 			if (err) throw err
 			res.status(200)
@@ -84,10 +93,36 @@ app.get("/api/messages", async (req, res) => {
 	}
 })
 
+app.post("/api/messages", (req, res) => {
+	let t = req.body.to
+	let m = req.body.message
+	if (!t || !m) {
+		res.status(400)
+		res.send("Bad Request")
+		return
+	}
+	try {
+		let token = req.headers["authorization"].split(" ")[1]
+		token = jwt.verify(token, SECRETKEY)
+		// Yes I know taking a value directly from the user and using it to
+		// insert an SQL command is horrible security.
+		let sql = `insert into messages(from_id, to_id, message) values(${token.id}, ${t}, ${m});`
+		con.query(sql, (err) => {
+			if (err) throw err
+			res.status(200)
+			res.send("Message sent")
+		})
+	}
+	catch (e) {
+		res.status(401)
+		res.send("not authorized")
+	}
+})
+
 app.post("/api/logout", (req, res) => {
 	res.send("ok")
 })
 
-app.listen(port, () => {
+app.listen(PORT, () => {
 	console.log("The application has started")
 })
