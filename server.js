@@ -21,9 +21,9 @@ let con = mysql.createConnection({
 	database: DATABASE
 })
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) =>  {
 	console.log("Connected!")
-	let sql = "select * from users;"
+	let sql = 'select * from users;'
 	con.query(sql, (err, result) => {
 		if (err) throw err
 		res.status(200)
