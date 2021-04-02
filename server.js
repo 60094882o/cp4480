@@ -10,6 +10,7 @@ const DATABASE = process.env.DATABASE
 const PASSWORD = process.env.PASSWORD
 const SECRETKEY = process.env.SECRETKEY
 const PORT = process.env.PORT
+const API = process.env.API
 
 app.use(express.json())
 app.use(express.static("webfiles"))
@@ -32,7 +33,7 @@ app.get("/", (req, res) => {
 	})
 })
 
-app.post("/api/login", (req, res) => {
+app.post(`/${API}/login`, (req, res) => {
 	console.log(req.body)
 	let u = req.body.username
 	let p = req.body.password
@@ -66,7 +67,7 @@ app.post("/api/login", (req, res) => {
 	})
 })
 
-app.get("/api/messages", async (req, res) => {
+app.get(`/${API}/messages`, async (req, res) => {
 	try {
 		let token = req.headers["authorization"].split(" ")[1]
 		token = jwt.verify(token, SECRETKEY)
@@ -89,7 +90,7 @@ app.get("/api/messages", async (req, res) => {
 	}
 })
 
-app.post("/api/messages", (req, res) => {
+app.post(`/${API}/messages`, (req, res) => {
 	let t = req.body.to
 	let m = req.body.message
 	if (!t || !m) {
@@ -115,11 +116,10 @@ app.post("/api/messages", (req, res) => {
 	}
 })
 
-app.post("/api/logout", (req, res) => {
+app.post(`/${API}/logout`, (req, res) => {
 	res.send("ok")
 })
 
-console.log(`BEFORE THE LISTEN ${PORT}`)
 app.listen(PORT, () => {
 	console.log(`The application has started on ${PORT}`)
 })
