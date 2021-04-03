@@ -82,9 +82,9 @@ test("Read your messages as a user", () => {
 		}, { params })
 
 		response = await axios.get("/api/messages", "", { params })
+		console.log("response", response)
 	}
 	sendMessagesAsUser().then(() => {
-		console.log("response", response)
 		expect(response.length).toBe(2)
 	},console.log)
 })
