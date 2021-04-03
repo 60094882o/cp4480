@@ -41,53 +41,54 @@ function getYourMessages() {
 }
 
 function setInbox(messages) {
-    let me
     $.ajax('/api/me',{
         method:"POST",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-        success: (name) => {me = name}
-    })
-    console.log("me", me)
-    $('#inbox').html('')
-    messages.map(message => {
-    if (message.to === me) {
-        $('#inbox').append(`
-        <div class="card">
-            <div class="card-body">
-                From: ${message.sender}
-                Message: ${message.message}
-            </div>
-        </div>
-        `)
-    }
+        success: (name) => {
+            let me = name
+            console.log("me", me)
+            $('#inbox').html('')
+            messages.map(message => {
+            if (message.to === me) {
+                $('#inbox').append(`
+                <div class="card">
+                    <div class="card-body">
+                        From: ${message.sender}
+                        Message: ${message.message}
+                    </div>
+                </div>
+                `)
+            }
+            })
+        }
     })
 }
 
 function setSent(messages) {
-    let me
     $.ajax('/api/me',{
         method:"POST",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-        success: (name) => {me = name}
-    })
-
-    $('#sent').html('')
-    messages.map(message => {
-    if (message.sender === me) {
-    $('#sent').append(`
-    <div class="card">
-        <div class="card-body">
-            To: ${message.to}
-            Message: ${message.message}
-        </div>
-    </div>
-    `)
-    }
+        success: (name) => {
+            me = name
+            $('#sent').html('')
+            messages.map(message => {
+            if (message.sender === me) {
+            $('#sent').append(`
+            <div class="card">
+                <div class="card-body">
+                    To: ${message.to}
+                    Message: ${message.message}
+                </div>
+            </div>
+            `)
+            }
+            })
+        }
     })
 }
