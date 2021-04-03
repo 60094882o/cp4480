@@ -56,7 +56,7 @@ test("Send message as an admin", async () => {
 		response = await axios.post(
 			`http://localhost/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
-			{ headers: params }
+			{ headers: params() }
 		)
 	}
 	await sendMessageAsAdmin()
