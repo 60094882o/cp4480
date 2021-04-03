@@ -1,6 +1,6 @@
-// const axios = require("axios")
+const axios = require("axios")
 const dotenv = require("dotenv")
-const fetch = require("node-fetch")
+// const fetch = require("node-fetch")
 // const mysql = require("mysql")
 dotenv.config()
 
@@ -17,23 +17,23 @@ let token = null
 // let params = { Authorization: `Bearer ${token}` }
 
 test("Logging in as user", async () => {
-	// async function login() {
-	// 	let response = await axios.post(`http://localhost:${PORT}/${API}/login`, { username: "Omar", password: "omartest" })
-	// 	token = response.data
-	// }
-	// await login()
-	// let isNull = true
-	// if (token) isNull = false
-	// expect(isNull).toBe(false)
 	async function login() {
-		let response = await fetch(`http://localhost/${API}/login`, { method: "POST", body: { username: "Omar", password: "omartest" } })
-		response = await response.json()
-		token = response
+		let response = await axios.post(`http://localhost/${API}/login`, { username: "Omar", password: "omartest" })
+		token = response.data
 	}
 	await login()
 	let isNull = true
 	if (token) isNull = false
 	expect(isNull).toBe(false)
+	// async function login() {
+	// 	let response = await fetch(`http://localhost/${API}/login`, { method: "POST", body: { username: "Omar", password: "omartest" } })
+	// 	response = await response.json()
+	// 	token = response
+	// }
+	// await login()
+	// let isNull = true
+	// if (token) isNull = false
+	// expect(isNull).toBe(false)
 })
 
 // test("Logging in as an admin", async () => {
