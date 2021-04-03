@@ -76,11 +76,9 @@ test("Read your messages as a user", async () => {
 			message: "This is another message for another user"
 		}, { headers: params() })
 
-		async function login() {
-			let login = await axios.post(`http://localhost/${API}/login`, { username: "Ahmed", password: "ahmedtest" })
-			token = login.data
-		}
-		await login()
+
+		let login = await axios.post(`http://localhost/${API}/login`, { username: "Ahmed", password: "ahmedtest" })
+		token = login.data
 
 		response = await axios.get(`http://localhost/${API}/messages`, "", { headers: params() })
 	}

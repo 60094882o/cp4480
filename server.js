@@ -70,8 +70,8 @@ app.post(`/${API}/login`, (req, res) => {
 
 app.get(`/${API}/messages`, async (req, res) => {
 	try {
-		let token = req.headers["authorization"].split(" ")[1]
 		console.log("headers", req.headers)
+		let token = req.headers["authorization"].split(" ")[1]
 		console.log("token recieved", token)
 		token = jwt.verify(token, SECRETKEY)
 		let sql
