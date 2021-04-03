@@ -50,7 +50,7 @@ function setInbox(messages) {
         },
         success: (name) => {me = name}
     })
-
+    console.log("me", me)
     $('#inbox').html('')
     messages.map(message => {
     if (message.to === me) {
