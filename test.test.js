@@ -26,7 +26,7 @@ test("Logging in as user", async () => {
 	// if (token) isNull = false
 	// expect(isNull).toBe(false)
 	async function login() {
-		let response = await fetch(`localhost:${PORT}/${API}/login`, { method: "POST", body: { username: "Omar", password: "omartest" } })
+		let response = await fetch(`localhost/${API}/login`, { method: "POST", body: { username: "Omar", password: "omartest" } })
 		response = await response.json()
 		token = response
 	}
