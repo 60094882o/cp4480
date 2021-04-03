@@ -25,7 +25,7 @@ test("Logging in as user", () => {
 		if (token) isNull = false
 		console.log("token", token)
 		expect(isNull).toBe(false)
-	})
+	},console.log)
 })
 
 test("Send message as a user", () => {
@@ -38,7 +38,7 @@ test("Send message as a user", () => {
 	}
 	sendMessageAsUser().then(() => {
 		expect(response).toBe("Message sent")
-	})
+	},console.log)
 })
 
 test("Logging in as an admin", () => {
@@ -51,7 +51,7 @@ test("Logging in as an admin", () => {
 		if (token) isNull = false
 		console.log("token", token)
 		expect(isNull).toBe(false)
-	})
+	},console.log)
 })
 
 test("Send message as an admin", () => {
@@ -64,7 +64,7 @@ test("Send message as an admin", () => {
 	}
 	sendMessageAsUser().then(() => {
 		expect(response).toBe("Message sent")
-	})
+	},console.log)
 })
 
 
@@ -86,5 +86,5 @@ test("Read your messages as a user", () => {
 	sendMessagesAsUser().then(() => {
 		console.log("response", response)
 		expect(response.length).toBe(2)
-	})
+	},console.log)
 })
