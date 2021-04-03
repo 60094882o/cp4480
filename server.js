@@ -53,7 +53,7 @@ app.post(`/${API}/login`, (req, res) => {
 			if (user) {
 				let userInfo = {
 					id: user.id,
-                    name: user.username,
+					name: user.username,
 					role: user.role
 				}
 				let token = jwt.sign(userInfo, SECRETKEY)
@@ -82,23 +82,23 @@ app.get(`/${API}/messages`, async (req, res) => {
 			sql = `select * from messages where messages.to_id = ${token.id}`
 		}
 
-        let messagesArr
+		let messagesArr
 		con.query(sql, (err, messages) => {
 			if (err) throw err
 			console.log("MESSAGES REQUESTED", messages)
-            messagesArr = [...messages]
+			messagesArr = [...messages]
 		})
 
-        sql = `select * from users;`
-        con.query(sql, (err, users) => {
+		sql = "select * from users;"
+		con.query(sql, (err, users) => {
 			if (err) throw err
-            let newMessages = messagesArr.map(message => {
-                let sender = users.find(user => user.id === message.from_id)
-                return {...message, sender:sender}
-            })
+			let newMessages = messagesArr.map(message => {
+				let sender = users.find(user => user.id === message.from_id)
+				return {...message, sender:sender}
+			})
 
-            res.status(200)
-            res.send(newMessages)
+			res.status(200)
+			res.send(newMessages)
 		})
 	}
 	catch (e) {
