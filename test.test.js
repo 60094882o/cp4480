@@ -122,7 +122,11 @@ test("Read your messages as an admin", async () => {
 test("Check your own name", async () => {
 	let response = null
 	async function checkName() {
-		response = await axios.post(`http://localhost/${API}/me`, { username: "Ahmed", password: "ahmedtest" })
+		response = await axios.post(
+			`http://localhost/${API}/me`,
+			{ username: "Ahmed", password: "ahmedtest" },
+			{ headers: params() }
+		)
 	}
 
 	await checkName()
