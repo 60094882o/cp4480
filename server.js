@@ -85,7 +85,6 @@ app.get(`/${API}/messages`, async (req, res) => {
 		let messagesArr
 		con.query(sql, (err, messages) => {
 			if (err) throw err
-			console.log("MESSAGES REQUESTED", messages)
 			messagesArr = [...messages]
 		})
 
@@ -98,6 +97,7 @@ app.get(`/${API}/messages`, async (req, res) => {
 			})
 
 			res.status(200)
+            console.log("MESSAGES REQUESTED", newMessages)
 			res.send(newMessages)
 		})
 	}
