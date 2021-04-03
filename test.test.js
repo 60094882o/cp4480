@@ -36,7 +36,7 @@ test("Send message as a user", async () => {
 				to: "2",
 				message: "How you doing?"
 			},
-			headers: params
+			headers: { "Authorization": `Bearer ${token}` }
 		})
 	}
 	await sendMessageAsUser()
