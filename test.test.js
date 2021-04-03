@@ -63,22 +63,28 @@ test("Send message as an admin", async () => {
 	expect(response.data).toBe("Message sent")
 })
 
-// test("Read your messages as a user", async () => {
-// 	let response = null
-// 	async function sendMessagesAsUser() {
-// 		await axios.post("/api/messages", {
-// 			to: "1",
-// 			message: "This is the second message"
-// 		}, { params })
+test("Read your messages as a user", async () => {
+	let response = null
+	async function sendMessagesAsUser() {
+		await axios.post(`http://localhost/${API}/messages`, {
+			to: "1",
+			message: "This is the second message"
+		}, { headers: params() })
 
-// 		await axios.post("/api/messages", {
-// 			to: "2",
-// 			message: "This is another message for another user"
-// 		}, { params })
+		await axios.post(`http://localhost/${API}/messages`, {
+			to: "2",
+			message: "This is another message for another user"
+		}, { headers: params() })
 
-// 		response = await axios.get("/api/messages", "", { params })
-// 	}
+		async function login() {
+			let login = await axios.post(`http://localhost/${API}/login`, { username: "Ahmed", password: "ahmedtest" })
+			token = login.data
+		}
+		await login()
 
-// 	await sendMessagesAsUser()
-// 	expect(response.data.length).toBe(2)
-// })
+		response = await axios.get(`http://localhost/${API}/messages`, "", { headers: params() })
+	}
+
+	await sendMessagesAsUser()
+	expect(response.data.length).toBe(3)
+})
