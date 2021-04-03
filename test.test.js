@@ -1,6 +1,5 @@
 const axios = require("axios")
 const dotenv = require("dotenv")
-// const fetch = require("node-fetch")
 // const mysql = require("mysql")
 dotenv.config()
 
@@ -14,7 +13,7 @@ const API = process.env.API
 
 let token = null
 
-// let params = { Authorization: `Bearer ${token}` }
+let params = { Authorization: `Bearer ${token}` }
 
 test("Logging in as user", async () => {
 	async function login() {
@@ -25,37 +24,30 @@ test("Logging in as user", async () => {
 	let isNull = true
 	if (token) isNull = false
 	expect(isNull).toBe(false)
-	// async function login() {
-	// 	let response = await fetch(`http://localhost/${API}/login`, { method: "POST", body: { username: "Omar", password: "omartest" } })
-	// 	response = await response.json()
-	// 	token = response
-	// }
-	// await login()
-	// let isNull = true
-	// if (token) isNull = false
-	// expect(isNull).toBe(false)
 })
 
-// test("Logging in as an admin", async () => {
-// 	async function login() {
-// 		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
-// 		token = login.data
-// 	}
-// 	await login()
-// 	expect(token !== null).toBe(true)
-// })
+test("Logging in as an admin", async () => {
+	async function login() {
+		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+		token = login.data
+	}
+	await login()
+	let isNull = true
+	if (token) isNull = false
+	expect(isNull).toBe(true)
+})
 
-// test("Send message as a user", async () => {
-// 	let response = null
-// 	async function sendMessageAsUser() {
-// 		response = await axios.post("http://localhost/api/messages", {
-// 			to: "1",
-// 			message: "Hello there"
-// 		}, { params })
-// 	}
-// 	await sendMessageAsUser()
-// 	expect(response.data).toBe("Message sent")
-// })
+test("Send message as a user", async () => {
+	let response = null
+	async function sendMessageAsUser() {
+		response = await axios.post("http://localhost/api/messages", {
+			to: "1",
+			message: "Hello there"
+		}, { params })
+	}
+	await sendMessageAsUser()
+	expect(response.data).toBe("Message sent")
+})
 
 // test("Send message as an admin", async () => {
 // 	let response = null
