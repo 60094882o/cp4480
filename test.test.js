@@ -1,5 +1,6 @@
 // const axios = require("axios")
 const dotenv = require("dotenv")
+const fetch = require("node-fetch")
 // const mysql = require("mysql")
 dotenv.config()
 
