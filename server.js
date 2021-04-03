@@ -167,11 +167,11 @@ app.post(`/${API}/messages`, (req, res) => {
 app.post(`/${API}/me`, (req, res) => {
 	try {
 		let token = req.headers["authorization"].split(" ")[1]
-        console.log("headers", req.headers)
+		console.log("headers", req.headers)
 		console.log("token recieved", token)
 		token = jwt.verify(token, SECRETKEY)
 		res.status(200)
-        console.log("NAME REQUESTED", token.name)
+		console.log("NAME REQUESTED", token.name)
 		res.send(token.name)
 	} catch (e) {
 		console.log(e)
