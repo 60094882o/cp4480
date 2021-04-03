@@ -1,5 +1,11 @@
 let token = null
 
+if (!token) window.location.replace("/");
+
+if (token && window.location.pathname === "/user.html") {
+    getYourMessages()
+}
+
 const setGlobalHeaders = () => {
     $.ajaxSetup({
         headers: {
@@ -24,5 +30,31 @@ const login = () => {
             setGlobalHeaders()
             window.location.replace("/user.html");
         }
+    })
+}
+
+const getYourMessages = () => {
+    $.ajax('/api/messages',{
+        method:"GET",
+        contentType: "application/json; charset=utf-8",
+        success: (messages) => {
+            setInbox(messages)
+            // setSent(messages)
+        }
+    })
+}
+
+function setInbox(messages) {
+    $('#inbox').html('')
+    messages.map(message => {
+    
+    $('#inbox').append(`
+    <div class="card">
+        <div class="card-body">
+            From: <div id="user${message.from_id}"></div>
+            Message: ${message.message}
+        </div>
+    </div>
+    `)
     })
 }
