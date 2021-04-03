@@ -122,15 +122,14 @@ test("Read your messages as an admin", async () => {
 test("Check your own name", async () => {
 	let response = null
 	async function checkName() {
-		let name = await axios.post(`http://localhost/${API}/me`, { username: "Ahmed", password: "ahmedtest" })
-		response = name
+		response = await axios.post(`http://localhost/${API}/me`, { username: "Ahmed", password: "ahmedtest" })
 	}
 
 	await checkName()
-	expect(response.data).toBe("Ahmed")
+	expect(response).toBe("Ahmed")
 })
 
-test("Get all users", async () => {
+test("Get all users except yourself", async () => {
 	let response = null
 	async function getUsers() {
 		response = await axios({
@@ -141,5 +140,5 @@ test("Get all users", async () => {
 	}
 
 	await getUsers()
-	expect(response.data.length).toBe(3)
+	expect(response.data.length).toBe(2)
 })
