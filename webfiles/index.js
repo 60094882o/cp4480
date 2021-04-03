@@ -109,3 +109,21 @@ function setSelect(messages) {
         }
     })
 }
+
+function sendMessage() {
+    let message = $('#message').val()
+    let userid = $('#select').val()
+    let data = {
+        to: userid,
+        message: message
+    }
+    $.ajax('/api/messages',{
+        method:"POST",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        success: () => {
+            console.log("ok")
+            $('#message').val("")
+        }
+    })
+}
