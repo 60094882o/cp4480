@@ -13,8 +13,6 @@ const API = process.env.API
 
 let token = null
 
-let params = { "Authorization": `Bearer ${token}` }
-
 test("Logging in as user", async () => {
 	async function login() {
 		let response = await axios.post(`http://localhost/${API}/login`, { username: "Omar", password: "omartest" })
