@@ -37,7 +37,7 @@ test("Send message as a user", () => {
 		}, { params })
 	}
 	sendMessageAsUser().then(() => {
-		expect(response).toBe("Message sent")
+		expect(response.data).toBe("Message sent")
 	},console.log)
 })
 
@@ -49,7 +49,6 @@ test("Logging in as an admin", () => {
 	login().then(() => {
 		let isNull = true
 		if (token) isNull = false
-		console.log("token", token)
 		expect(isNull).toBe(false)
 	},console.log)
 })
@@ -63,7 +62,7 @@ test("Send message as an admin", () => {
 		}, { params })
 	}
 	sendMessageAsUser().then(() => {
-		expect(response).toBe("Message sent")
+		expect(response.data).toBe("Message sent")
 	},console.log)
 })
 
@@ -82,9 +81,8 @@ test("Read your messages as a user", () => {
 		}, { params })
 
 		response = await axios.get("/api/messages", "", { params })
-		console.log("response", response)
 	}
 	sendMessagesAsUser().then(() => {
-		expect(response.length).toBe(2)
+		expect(response.data.length).toBe(2)
 	},console.log)
 })
