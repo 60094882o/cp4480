@@ -9,7 +9,7 @@ if (token && window.location.pathname === "/user.html") {
 const setGlobalHeaders = () => {
     $.ajaxSetup({
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     })
 }
