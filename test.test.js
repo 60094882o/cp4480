@@ -15,19 +15,20 @@ let token = null
 
 let params = { Authorization: `Bearer ${token}` }
 
-test("Logging in", async () => {
+test("Logging in", () => {
 	let login = async () => {
 		let login = await axios.post(`/${API}/login`, { username: "omar", password: "omartest" })
 		token = login.data
 	}
-	await login()
-	let isNull = true
-	if (token) isNull = false
-	console.log("token", token)
-	expect(isNull).toBe(false)
+	await login().then(() => {
+		let isNull = true
+		if (token) isNull = false
+		console.log("token", token)
+		expect(isNull).toBe(false)
+	})
 })
 
-test("Send message as a user", async () => {
+test("Send message as a user", () => {
 	let response = null
 	let sendMessageAsUser = async () => {
 		response = await axios.post("/api/messages", {
@@ -35,8 +36,9 @@ test("Send message as a user", async () => {
 			message: "Hello there"
 		}, { params })
 	}
-	await sendMessageAsUser()
-	expect(response).toBe("Message sent")
+	await sendMessageAsUser().then(() => {
+		expect(response).toBe("Message sent")
+	})
 })
 
 
