@@ -8,7 +8,7 @@ dotenv.config()
 // const DATABASE = process.env.DATABASE
 // const PASSWORD = process.env.PASSWORD
 // const SECRETKEY = process.env.SECRETKEY
-const PORT = process.env.PORT
+// const PORT = process.env.PORT
 const API = process.env.API
 // const USER = process.env.USER
 
