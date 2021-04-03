@@ -35,16 +35,52 @@ function getYourMessages() {
         success: (messages) => {
             console.log("messages", messages)
             setInbox(messages)
-            // setSent(messages)
+            setSent(messages)
         }
     })
 }
 
 function setInbox(messages) {
+    let me
+    $.ajax('/api/me',{
+        method:"POST",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        success: (name) => {me = name}
+    })
+
     $('#inbox').html('')
     messages.map(message => {
-    
-    $('#inbox').append(`
+    if (message.to === me) {
+        $('#inbox').append(`
+        <div class="card">
+            <div class="card-body">
+                From: ${message.sender}
+                Message: ${message.message}
+            </div>
+        </div>
+        `)
+    }
+    })
+}
+
+function setSent(messages) {
+    let me
+    $.ajax('/api/me',{
+        method:"POST",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        success: (name) => {me = name}
+    })
+
+    $('#sent').html('')
+    messages.map(message => {
+    if (message.sender === me) {
+    $('#sent').append(`
     <div class="card">
         <div class="card-body">
             From: ${message.from_id}
@@ -52,5 +88,6 @@ function setInbox(messages) {
         </div>
     </div>
     `)
+    }
     })
 }
