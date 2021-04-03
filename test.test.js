@@ -124,13 +124,12 @@ test("Check your own name", async () => {
 	async function checkName() {
 		response = await axios.post(
 			`http://localhost/${API}/me`,
-			{ username: "Ahmed", password: "ahmedtest" },
 			{ headers: params() }
 		)
 	}
 
 	await checkName()
-	expect(response.data.username).toBe("Ahmed")
+	expect(response).toBe("Kareem")
 })
 
 test("Get all users except yourself", async () => {
