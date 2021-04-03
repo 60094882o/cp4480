@@ -90,3 +90,30 @@ test("Read your messages as a user", async () => {
 	await sendMessagesAsUser()
 	expect(response.data.length).toBe(3)
 })
+test("Read your messages as an admin", async () => {
+	let response = null
+	async function sendMessagesAsUser() {
+		await axios.post(`http://localhost/${API}/messages`, {
+			to: "1",
+			message: "This is the second message"
+		}, { headers: params() })
+
+		await axios.post(`http://localhost/${API}/messages`, {
+			to: "2",
+			message: "This is another message for another user"
+		}, { headers: params() })
+
+
+		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+		token = login.data
+
+		response = await axios({
+			method: "get",
+			url: `http://localhost/${API}/messages`,
+			headers: params()
+		})
+	}
+
+	await sendMessagesAsUser()
+	expect(response.data.length).toBe(6)
+})
