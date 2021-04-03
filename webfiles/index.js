@@ -47,7 +47,7 @@ function setInbox(messages) {
     $('#inbox').append(`
     <div class="card">
         <div class="card-body">
-            From: <div id="user${message.from_id}"></div>
+            From: <div id="user${message.sender}"></div>
             Message: ${message.message}
         </div>
     </div>
