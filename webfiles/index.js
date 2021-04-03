@@ -6,14 +6,6 @@ if (token && window.location.pathname === "/user.html") {
     getYourMessages()
 }
 
-const setGlobalHeaders = () => {
-    $.ajaxSetup({
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-    })
-}
-
 const login = () => {
     let username = $('#username').val()
     let password = $('#password').val()
@@ -28,7 +20,6 @@ const login = () => {
         success: (msg) => {
             localStorage.setItem("token", msg);
             console.log("Token", localStorage.getItem("token"))
-            setGlobalHeaders()
             window.location.replace("/user.html");
         }
     })
@@ -38,6 +29,9 @@ function getYourMessages() {
     $.ajax('/api/messages',{
         method:"GET",
         contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
         success: (messages) => {
             console.log("messages", messages)
             setInbox(messages)
