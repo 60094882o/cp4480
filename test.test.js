@@ -1,14 +1,16 @@
 const axios = require("axios")
 const dotenv = require("dotenv")
-const mysql = require("mysql")
+// const mysql = require("mysql")
 dotenv.config()
 
-const DATABASE = process.env.DATABASE
-const PASSWORD = process.env.PASSWORD
-const SECRETKEY = process.env.SECRETKEY
-const PORT = process.env.PORT
+let expect, test
+
+// const DATABASE = process.env.DATABASE
+// const PASSWORD = process.env.PASSWORD
+// const SECRETKEY = process.env.SECRETKEY
+// const PORT = process.env.PORT
 const API = process.env.API
-const USER = process.env.USER
+// const USER = process.env.USER
 
 let token = null
 
@@ -18,7 +20,7 @@ let login = async () => {
 	let login = await axios.post(`/${API}/login`, { username: "omar", password: "omartest" })
 	token = login.data
 
-	test('Logging in', () => {
+	test("Logging in", () => {
 		let isNull = true
 		if (token) isNull = false
 		console.log("token", token)
@@ -28,11 +30,11 @@ let login = async () => {
 
 
 let sendMessageAsUser = async () => {
-	let response = await axios.post(`/api/messages`, {
+	let response = await axios.post("/api/messages", {
 		to: "1",
 		message: "Hello there"
 	}, { params })
-	test('Send message as a user', () => {
+	test("Send message as a user", () => {
 		expect(response).toBe("Message sent")
 	})
 }
