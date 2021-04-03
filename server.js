@@ -93,11 +93,13 @@ app.get(`/${API}/messages`, async (req, res) => {
 			if (err) throw err
 			let newMessages = messagesArr.map(message => {
 				let sender = users.find(user => user.id === message.from_id)
-				return {...message, sender:sender}
+				let you = users.find(user => user.id === message.to_id)
+                
+				return {...message, sender:sender, you:you}
 			})
 
 			res.status(200)
-            console.log("MESSAGES REQUESTED", newMessages)
+			console.log("MESSAGES REQUESTED", newMessages)
 			res.send(newMessages)
 		})
 	}
