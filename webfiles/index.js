@@ -121,6 +121,9 @@ function sendMessage() {
         method:"POST",
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
         success: () => {
             console.log("ok")
             $('#message').val("")
