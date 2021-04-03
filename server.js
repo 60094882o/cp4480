@@ -100,7 +100,7 @@ app.post(`/${API}/messages`, (req, res) => {
 		return
 	}
 	try {
-		let token = req.headers["authorization"].split(" ")[1]
+		let token = req.headers["Authorization"].split(" ")[1]
 		token = jwt.verify(token, SECRETKEY)
 		// Yes I know taking a value directly from the user and using it to
 		// insert an SQL command is horrible security.
