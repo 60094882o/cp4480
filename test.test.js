@@ -13,11 +13,11 @@ const API = process.env.API
 
 let token = null
 
-let params = { Authorization: `Bearer ${token}` }
+// let params = { Authorization: `Bearer ${token}` }
 
 test("Logging in as user", async () => {
 	async function login() {
-		let login = await axios.post(`http://127.0.0.1/${API}/login`, { username: "Omar", password: "omartest" })
+		let login = await axios.post(`http://localhost/${API}/login`, { username: "Omar", password: "omartest" })
 		token = login.data
 		console.log("TOKEN DATA",login.data)
 	}
@@ -25,55 +25,55 @@ test("Logging in as user", async () => {
 	expect(token !== null).toBe(true)
 })
 
-test("Logging in as an admin", async () => {
-	async function login() {
-		let login = await axios.post(`/${API}/login`, { username: "Kareem", password: "kareemtest" })
-		token = login.data
-	}
-	await login()
-	expect(token !== null).toBe(true)
-})
+// test("Logging in as an admin", async () => {
+// 	async function login() {
+// 		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+// 		token = login.data
+// 	}
+// 	await login()
+// 	expect(token !== null).toBe(true)
+// })
 
-test("Send message as a user", async () => {
-	let response = null
-	async function sendMessageAsUser() {
-		response = await axios.post("/api/messages", {
-			to: "1",
-			message: "Hello there"
-		}, { params })
-	}
-	await sendMessageAsUser()
-	expect(response.data).toBe("Message sent")
-})
+// test("Send message as a user", async () => {
+// 	let response = null
+// 	async function sendMessageAsUser() {
+// 		response = await axios.post("http://localhost/api/messages", {
+// 			to: "1",
+// 			message: "Hello there"
+// 		}, { params })
+// 	}
+// 	await sendMessageAsUser()
+// 	expect(response.data).toBe("Message sent")
+// })
 
-test("Send message as an admin", async () => {
-	let response = null
-	async function sendMessageAsAdmin() {
-		response = await axios.post("/api/messages", {
-			to: "2",
-			message: "How are you doing?"
-		}, { params })
-	}
-	await sendMessageAsAdmin()
-	expect(response.data).toBe("Message sent")
-})
+// test("Send message as an admin", async () => {
+// 	let response = null
+// 	async function sendMessageAsAdmin() {
+// 		response = await axios.post("/api/messages", {
+// 			to: "2",
+// 			message: "How are you doing?"
+// 		}, { params })
+// 	}
+// 	await sendMessageAsAdmin()
+// 	expect(response.data).toBe("Message sent")
+// })
 
-test("Read your messages as a user", async () => {
-	let response = null
-	async function sendMessagesAsUser() {
-		await axios.post("/api/messages", {
-			to: "1",
-			message: "This is the second message"
-		}, { params })
+// test("Read your messages as a user", async () => {
+// 	let response = null
+// 	async function sendMessagesAsUser() {
+// 		await axios.post("/api/messages", {
+// 			to: "1",
+// 			message: "This is the second message"
+// 		}, { params })
 
-		await axios.post("/api/messages", {
-			to: "2",
-			message: "This is another message for another user"
-		}, { params })
+// 		await axios.post("/api/messages", {
+// 			to: "2",
+// 			message: "This is another message for another user"
+// 		}, { params })
 
-		response = await axios.get("/api/messages", "", { params })
-	}
+// 		response = await axios.get("/api/messages", "", { params })
+// 	}
 
-	await sendMessagesAsUser()
-	expect(response.data.length).toBe(2)
-})
+// 	await sendMessagesAsUser()
+// 	expect(response.data.length).toBe(2)
+// })
