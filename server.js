@@ -95,7 +95,7 @@ app.get(`/${API}/messages`, async (req, res) => {
 				let sender = users.find(user => user.id === message.from_id)
 				let you = users.find(user => user.id === message.to_id)
                 
-				return {...message, sender:sender, you:you}
+				return {...message, sender:sender.username, you:you.username}
 			})
 
 			res.status(200)
