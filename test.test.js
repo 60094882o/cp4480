@@ -16,29 +16,29 @@ let token = null
 
 let params = { Authorization: `Bearer ${token}` }
 
-let login = async () => {
-	let login = await axios.post(`/${API}/login`, { username: "omar", password: "omartest" })
-	token = login.data
+test("Logging in", async () => {
+	let login = async () => {
+		let login = await axios.post(`/${API}/login`, { username: "omar", password: "omartest" })
+		token = login.data
+	}
+	await login()
+	let isNull = true
+	if (token) isNull = false
+	console.log("token", token)
+	expect(isNull).toBe(false)
+})
 
-	test("Logging in", () => {
-		let isNull = true
-		if (token) isNull = false
-		console.log("token", token)
-		expect(isNull).toBe(false)
-	})
-}
-
-
-let sendMessageAsUser = async () => {
-	let response = await axios.post("/api/messages", {
-		to: "1",
-		message: "Hello there"
-	}, { params })
-	test("Send message as a user", () => {
-		expect(response).toBe("Message sent")
-	})
-}
-
+test("Send message as a user", async () => {
+	let response = null
+	let sendMessageAsUser = async () => {
+		response = await axios.post("/api/messages", {
+			to: "1",
+			message: "Hello there"
+		}, { params })
+	}
+	await sendMessageAsUser()
+	expect(response).toBe("Message sent")
+})
 
 
 // let postagain = async() => {
@@ -51,7 +51,5 @@ let sendMessageAsUser = async () => {
 // }
 
 
-login()
-sendMessageAsUser()
 // postagain()
 // read()
