@@ -113,7 +113,7 @@ app.post(`/${API}/messages`, (req, res) => {
 		})
 	}
 	catch (e) {
-        console.log(e)
+		console.log(e)
 		res.status(401)
 		res.send("Not authorized")
 	}
