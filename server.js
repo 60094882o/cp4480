@@ -94,8 +94,8 @@ app.get(`/${API}/messages`, async (req, res) => {
 			let newMessages = messagesArr.map(message => {
 				let sender = users.find(user => user.id === message.from_id)
 				let to = users.find(user => user.id === message.to_id)
-                
-				return {...message, sender:sender.username, to:to.username}
+
+				return { ...message, sender: sender.username, to: to.username }
 			})
 
 			res.status(200)
@@ -122,6 +122,10 @@ app.get(`/${API}/users`, async (req, res) => {
 			if (err) throw err
 			res.status(200)
 			console.log("USERS REQUESTED", users)
+
+			//Sanitize
+			users = users.map(user => { delete user.password })
+
 			res.send(users)
 		})
 	}
@@ -158,10 +162,6 @@ app.post(`/${API}/messages`, (req, res) => {
 		res.status(401)
 		res.send("Not authorized")
 	}
-})
-
-app.post(`/${API}/logout`, (req, res) => {
-	res.send("ok")
 })
 
 app.post(`/${API}/me`, (req, res) => {

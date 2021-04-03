@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User screen</title>
+    <link rel="stylesheet" href="./bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm"><h1>Inbox</h1><br /><br /><div id="inbox"></div></div>
+            <div class="col-sm">
+                <h1>Message</h1><br /><br />
+                <input class="form-control" placeholder="Send a message" type="text" id="message" /> <br />
+                <select id="select" class="form-control"></select><br/><br/>
+                <button class="btn btn-primary" id="submitButton" onclick="sendMessage()">Send</button>
+            </div>
+            <div class="col-sm pl-5"><h1>Sent</h1><br /><br /><div id="sent"></div></div>
+            <div class="col-sm"><h1>All</h1><div id="all"></div></div>
+        </div>
+    </div>
+
+    <script src="messaging.min.js"></script>
+</body>
+</html>

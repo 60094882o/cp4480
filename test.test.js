@@ -65,7 +65,7 @@ test("Send message as an admin", async () => {
 
 test("Read your messages as a user", async () => {
 	let response = null
-	async function sendMessagesAsUser() {
+	async function readMessagesAsUser() {
 		await axios.post(`http://localhost/${API}/messages`, {
 			to: "1",
 			message: "This is the second message"
@@ -87,12 +87,13 @@ test("Read your messages as a user", async () => {
 		})
 	}
 
-	await sendMessagesAsUser()
+	await readMessagesAsUser()
 	expect(response.data.length).toBe(3)
 })
+
 test("Read your messages as an admin", async () => {
 	let response = null
-	async function sendMessagesAsUser() {
+	async function readMessagesAsAdmin() {
 		await axios.post(`http://localhost/${API}/messages`, {
 			to: "1",
 			message: "This is the second message"
@@ -114,6 +115,31 @@ test("Read your messages as an admin", async () => {
 		})
 	}
 
-	await sendMessagesAsUser()
+	await readMessagesAsAdmin()
 	expect(response.data.length).toBe(6)
+})
+
+test("Check your own name", async () => {
+	let response = null
+	async function checkName() {
+		let name = await axios.post(`http://localhost/${API}/me`, { username: "Ahmed", password: "ahmedtest" })
+		response = name
+	}
+
+	await checkName()
+	expect(response.data).toBe("Ahmed")
+})
+
+test("Get all users", async () => {
+	let response = null
+	async function getUsers() {
+		response = await axios({
+			method: "get",
+			url: `http://localhost/${API}/users`,
+			headers: params()
+		})
+	}
+
+	await getUsers()
+	expect(response.data.length).toBe(3)
 })
