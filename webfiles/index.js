@@ -83,7 +83,7 @@ function setSent(messages) {
     $('#sent').append(`
     <div class="card">
         <div class="card-body">
-            From: ${message.from_id}
+            To: ${message.to}
             Message: ${message.message}
         </div>
     </div>

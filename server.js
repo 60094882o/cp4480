@@ -94,7 +94,6 @@ app.get(`/${API}/messages`, async (req, res) => {
 			let newMessages = messagesArr.map(message => {
 				let sender = users.find(user => user.id === message.from_id)
 				let to = users.find(user => user.id === message.to_id)
-				let you = token.name
                 
 				return {...message, sender:sender.username, to:to.username}
 			})
@@ -144,16 +143,16 @@ app.post(`/${API}/logout`, (req, res) => {
 })
 
 app.post(`/${API}/me`, (req, res) => {
-    try {
-        let token = req.headers["authorization"].split(" ")[1]
-        token = jwt.verify(token, SECRETKEY)
-        res.status(200)
-        res.send(token.name)
-    } catch (e) {
+	try {
+		let token = req.headers["authorization"].split(" ")[1]
+		token = jwt.verify(token, SECRETKEY)
+		res.status(200)
+		res.send(token.name)
+	} catch (e) {
 		console.log(e)
 		res.status(401)
 		res.send("Not authorized")
-    }
+	}
 })
 
 app.listen(PORT, () => {
