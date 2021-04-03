@@ -76,7 +76,7 @@ app.get(`/${API}/messages`, async (req, res) => {
 		if (token.role === "admin") {
 			sql = "select * from messages"
 		} else {
-			sql = `select * from messages where messages.userid = ${token.id}`
+			sql = `select * from messages where messages.from_id = ${token.id}`
 		}
 
 		con.query(sql, (err, messages) => {
