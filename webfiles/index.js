@@ -34,7 +34,7 @@ const login = () => {
     })
 }
 
-const getYourMessages = () => {
+function getYourMessages() {
     $.ajax('/api/messages',{
         method:"GET",
         contentType: "application/json; charset=utf-8",
