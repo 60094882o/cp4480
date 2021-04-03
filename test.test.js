@@ -29,7 +29,7 @@ test("Logging in as user", async () => {
 test("Send message as a user", async () => {
 	let response = null
 	async function sendMessageAsUser() {
-		response = await axios.post("http://localhost/api/messages", {
+		response = await axios.post(`http://localhost/${API}/messages`, {
 			to: "1",
 			message: "Hello there"
 		}, { params })
@@ -52,7 +52,7 @@ test("Logging in as an admin", async () => {
 test("Send message as an admin", async () => {
 	let response = null
 	async function sendMessageAsAdmin() {
-		response = await axios.post("/api/messages", {
+		response = await axios.post(`http://localhost/${API}/messages`, {
 			to: "2",
 			message: "How are you doing?"
 		}, { params })
