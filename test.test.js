@@ -3,7 +3,6 @@ const dotenv = require("dotenv")
 // const mysql = require("mysql")
 dotenv.config()
 
-let expect, test
 
 // const DATABASE = process.env.DATABASE
 // const PASSWORD = process.env.PASSWORD
