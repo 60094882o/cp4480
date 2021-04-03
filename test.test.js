@@ -17,7 +17,7 @@ let params = { Authorization: `Bearer ${token}` }
 
 test("Logging in as user", async () => {
 	async function login() {
-		let login = await axios.post(`/${API}/login`, { username: "omar", password: "omartest" })
+		let login = await axios.post(`/${API}/login`, { username: "Omar", password: "omartest" })
 		token = login.data
 	}
 	await login()
@@ -26,7 +26,7 @@ test("Logging in as user", async () => {
 
 test("Logging in as an admin", async () => {
 	async function login() {
-		let login = await axios.post(`/${API}/login`, { username: "kareem", password: "kareemtest" })
+		let login = await axios.post(`/${API}/login`, { username: "Kareem", password: "kareemtest" })
 		token = login.data
 	}
 	await login()
