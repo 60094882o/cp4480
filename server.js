@@ -101,6 +101,7 @@ app.post(`/${API}/messages`, (req, res) => {
 	}
 	try {
 		let token = req.headers["authorization"].split(" ")[1]
+		console.log("headers", token.headers)
 		console.log("token recieved", token)
 		token = jwt.verify(token, SECRETKEY)
 		// Yes I know taking a value directly from the user and using it to
