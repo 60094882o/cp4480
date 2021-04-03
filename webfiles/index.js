@@ -1,6 +1,8 @@
-if (!window.token && window.location.pathname !== "/") window.location.replace("/");
+let token = localStorage.getItem("token")
 
-if (window.token && window.location.pathname === "/user.html") {
+if (!token && window.location.pathname !== "/") window.location.replace("/");
+
+if (token && window.location.pathname === "/user.html") {
     getYourMessages()
 }
 
@@ -24,8 +26,8 @@ const login = () => {
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         success: (msg) => {
-            window.token = msg
-            console.log("Token", window.token)
+            localStorage.setItem("token", msg);
+            console.log("Token", localStorage.getItem("token"))
             setGlobalHeaders()
             window.location.replace("/user.html");
         }
