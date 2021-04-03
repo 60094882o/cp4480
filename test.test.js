@@ -19,6 +19,7 @@ test("Logging in as user", async () => {
 	async function login() {
 		let login = await axios.post(`/${API}/login`, { username: "Omar", password: "omartest" })
 		token = login.data
+		console.log(login.data)
 	}
 	await login()
 	expect(token !== null).toBe(true)
