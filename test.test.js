@@ -130,7 +130,7 @@ test("Check your own name", async () => {
 	}
 
 	await checkName()
-	expect(response).toBe("Ahmed")
+	expect(response.data.username).toBe("Ahmed")
 })
 
 test("Get all users except yourself", async () => {
