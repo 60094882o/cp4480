@@ -39,6 +39,7 @@ const getYourMessages = () => {
         method:"GET",
         contentType: "application/json; charset=utf-8",
         success: (messages) => {
+            console.log("messages", messages)
             setInbox(messages)
             // setSent(messages)
         }
