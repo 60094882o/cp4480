@@ -68,15 +68,22 @@ test("Send message as an admin", () => {
 })
 
 
-// let postagain = async() => {
-//     await axios.post('http://localhost:3001/api/animals',params,dog)
-// }
+test("Read your messages as a user", () => {
+	let response = null
+	async function sendMessagesAsUser() {
+		await axios.post("/api/messages", {
+			to: "1",
+			message: "This is the second message"
+		}, { params })
 
-// let read = async() => {
-//     let res = await axios.get('http://localhost:3001/api/animals',params)
-//     console.log(res.data)
-// }
+		await axios.post("/api/messages", {
+			to: "2",
+			message: "This is another message for another user"
+		}, { params })
 
-
-// postagain()
-// read()
+		response = await axios.get("/api/messages", "", { params })
+	}
+	sendMessagesAsUser().then(() => {
+		expect(response.length).toBe(2)
+	})
+})
