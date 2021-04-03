@@ -36,6 +36,7 @@ function getYourMessages() {
             console.log("messages", messages)
             setInbox(messages)
             setSent(messages)
+            setSelect()
         }
     })
 }
@@ -88,6 +89,22 @@ function setSent(messages) {
             </div>
             `)
             }
+            })
+        }
+    })
+}
+
+function setSelect(messages) {
+    $.ajax('/api/users',{
+        method:"GET",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        success: (users) => {
+            $('#select').html('')
+            users.map(user => {
+            $('#select').append(`<option value="${user.id}">${user.username}</option>`)
             })
         }
     })

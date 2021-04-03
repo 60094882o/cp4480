@@ -109,6 +109,28 @@ app.get(`/${API}/messages`, async (req, res) => {
 	}
 })
 
+app.get(`/${API}/users`, async (req, res) => {
+	try {
+		console.log("headers", req.headers)
+		let token = req.headers["authorization"].split(" ")[1]
+		console.log("token recieved", token)
+		token = jwt.verify(token, SECRETKEY)
+
+		let sql = `select * from users where id != ${token.id};`
+
+		con.query(sql, (err, users) => {
+			if (err) throw err
+			res.status(200)
+			console.log("USERS REQUESTED", users)
+			res.send(users)
+		})
+	}
+	catch (e) {
+		res.status(401)
+		res.send("not authorized")
+	}
+})
+
 app.post(`/${API}/messages`, (req, res) => {
 	let t = req.body.to
 	let m = req.body.message
