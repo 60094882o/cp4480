@@ -104,7 +104,7 @@ app.post(`/${API}/messages`, (req, res) => {
 		token = jwt.verify(token, SECRETKEY)
 		// Yes I know taking a value directly from the user and using it to
 		// insert an SQL command is horrible security.
-		let sql = `insert into messages(from_id, to_id, message) values(${token.id}, ${t}, ${m});`
+		let sql = `insert into messages(from_id, to_id, message) values(${token.id}, ${t}, '${m}');`
 		con.query(sql, (err) => {
 			if (err) throw err
 			res.status(200)
