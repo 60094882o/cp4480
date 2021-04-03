@@ -79,7 +79,7 @@ app.get(`/${API}/messages`, async (req, res) => {
 		if (token.role === "admin") {
 			sql = "select * from messages"
 		} else {
-			sql = `select * from messages where messages.to_id = ${token.id}`
+			sql = `select * from messages where messages.to_id = ${token.id} or messages.from_id = ${token.id}`
 		}
 
 		let messagesArr
