@@ -1,6 +1,6 @@
 let token = null
 
-if (!token && window.location.pathname !== "/") window.location.replace("/");
+// if (!token && window.location.pathname !== "/") window.location.replace("/");
 
 if (token && window.location.pathname === "/user.html") {
     getYourMessages()
