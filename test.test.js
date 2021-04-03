@@ -13,7 +13,7 @@ const API = process.env.API
 
 let token = null
 
-let params = () => {return { "Authorization": `Bearer ${token}` }}
+let params = () => { return { "Authorization": `Bearer ${token}` } }
 
 test("Logging in as user", async () => {
 	async function login() {
@@ -29,15 +29,18 @@ test("Logging in as user", async () => {
 test("Send message as a user", async () => {
 	let response = null
 	async function sendMessageAsUser() {
-		response = await axios({
-			url:`http://localhost/${API}/messages`,
-			method:"post",
-			data: {
-				to: "2",
-				message: "How you doing?"
-			},
-			headers: params()
-		})
+		// response = await axios({
+		// 	url:`http://localhost/${API}/messages`,
+		// 	method:"post",
+		// 	data: {
+		// 		to: "2",
+		// 		message: "How you doing?"
+		// 	},
+		// 	headers: params()
+		// })
+		response = await axios.post(`http://localhost/${API}/messages`,
+			{ to: "2", message: "How you doing?" },
+			{ headers: params() })
 	}
 	await sendMessageAsUser()
 	expect(response.data).toBe("Message sent")
