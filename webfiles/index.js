@@ -25,7 +25,7 @@ const login = () => {
         contentType: "application/json; charset=utf-8",
         success: (msg) => {
             window.token = msg
-            console.log("Token", token)
+            console.log("Token", window.token)
             setGlobalHeaders()
             window.location.replace("/user.html");
         }
