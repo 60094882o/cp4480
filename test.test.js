@@ -124,6 +124,7 @@ test("Check your own name", async () => {
 	async function checkName() {
 		response = await axios.post(
 			`http://localhost/${API}/me`,
+			{ username: "Kareem", password: "kareemtest" },
 			{ headers: params() }
 		)
 	}
