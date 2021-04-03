@@ -26,17 +26,6 @@ test("Logging in as user", async () => {
 	expect(isNull).toBe(false)
 })
 
-test("Logging in as an admin", async () => {
-	async function login() {
-		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
-		token = login.data
-	}
-	await login()
-	let isNull = true
-	if (token) isNull = false
-	expect(isNull).toBe(true)
-})
-
 test("Send message as a user", async () => {
 	let response = null
 	async function sendMessageAsUser() {
@@ -49,17 +38,28 @@ test("Send message as a user", async () => {
 	expect(response.data).toBe("Message sent")
 })
 
-// test("Send message as an admin", async () => {
-// 	let response = null
-// 	async function sendMessageAsAdmin() {
-// 		response = await axios.post("/api/messages", {
-// 			to: "2",
-// 			message: "How are you doing?"
-// 		}, { params })
-// 	}
-// 	await sendMessageAsAdmin()
-// 	expect(response.data).toBe("Message sent")
-// })
+test("Logging in as an admin", async () => {
+	async function login() {
+		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+		token = login.data
+	}
+	await login()
+	let isNull = true
+	if (token) isNull = false
+	expect(isNull).toBe(true)
+})
+
+test("Send message as an admin", async () => {
+	let response = null
+	async function sendMessageAsAdmin() {
+		response = await axios.post("/api/messages", {
+			to: "2",
+			message: "How are you doing?"
+		}, { params })
+	}
+	await sendMessageAsAdmin()
+	expect(response.data).toBe("Message sent")
+})
 
 // test("Read your messages as a user", async () => {
 // 	let response = null
