@@ -1,8 +1,6 @@
-let token = null
+if (!window.token && window.location.pathname !== "/") window.location.replace("/");
 
-// if (!token && window.location.pathname !== "/") window.location.replace("/");
-
-if (token && window.location.pathname === "/user.html") {
+if (window.token && window.location.pathname === "/user.html") {
     getYourMessages()
 }
 
@@ -26,7 +24,7 @@ const login = () => {
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         success: (msg) => {
-            token = msg
+            window.token = msg
             console.log("Token", token)
             setGlobalHeaders()
             window.location.replace("/user.html");
