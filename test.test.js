@@ -17,7 +17,7 @@ let params = { Authorization: `Bearer ${token}` }
 
 test("Logging in as user", async () => {
 	async function login() {
-		let login = await axios.post(`http://localhost/${API}/login`, { username: "Omar", password: "omartest" })
+		let login = await axios.post(`http://127.0.0.1/${API}/login`, { username: "Omar", password: "omartest" })
 		token = login.data
 		console.log("TOKEN DATA",login.data)
 	}
