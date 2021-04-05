@@ -1,4 +1,5 @@
 let token = localStorage.getItem("token")
+let role = localStorage.getItem("role")
 
 if (!token && window.location.pathname !== "/") window.location.replace("/");
 
@@ -32,10 +33,11 @@ function redirect() {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         success: (role) => {
-            if (role === "admin")
+            if (role === "admin") 
                 window.location.pathname="/admin.html"
-            else if (role === "user")
+            else if (role === "user") 
                 window.location.pathname="/user.html"
+            localStorage.setItem("role", role);
         }
     })
 }
@@ -52,6 +54,8 @@ function getYourMessages() {
             setInbox(messages)
             setSent(messages)
             setSelect()
+            if (role === "admin") 
+                setAll(messages)
         }
     })
 }
@@ -106,6 +110,20 @@ function setSent(messages) {
                 }
             })
         }
+    })
+}
+
+function setAll(messages) {
+        $('#all').html('')
+        messages.map(message => {
+                $('#sent').append(`
+        <div class="card">
+            <div class="card-body">
+                To: ${message.to}
+                Message: ${message.message}
+            </div>
+        </div>
+        `)  
     })
 }
 
