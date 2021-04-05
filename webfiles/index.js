@@ -13,8 +13,8 @@ const login = () => {
         username: username,
         password: password
     }
-    $.ajax('/api/login',{
-        method:"POST",
+    $.ajax('/api/login', {
+        method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         success: (msg) => {
@@ -26,8 +26,8 @@ const login = () => {
 }
 
 function getYourMessages() {
-    $.ajax('/api/messages',{
-        method:"GET",
+    $.ajax('/api/messages', {
+        method: "GET",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -42,8 +42,8 @@ function getYourMessages() {
 }
 
 function setInbox(messages) {
-    $.ajax('/api/me',{
-        method:"POST",
+    $.ajax('/api/me', {
+        method: "POST",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -53,8 +53,8 @@ function setInbox(messages) {
             console.log("me", me)
             $('#inbox').html('')
             messages.map(message => {
-            if (message.to === me) {
-                $('#inbox').append(`
+                if (message.to === me) {
+                    $('#inbox').append(`
                 <div class="card">
                     <div class="card-body">
                         From: ${message.sender}
@@ -62,15 +62,15 @@ function setInbox(messages) {
                     </div>
                 </div>
                 `)
-            }
+                }
             })
         }
     })
 }
 
 function setSent(messages) {
-    $.ajax('/api/me',{
-        method:"POST",
+    $.ajax('/api/me', {
+        method: "POST",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -79,8 +79,8 @@ function setSent(messages) {
             me = name
             $('#sent').html('')
             messages.map(message => {
-            if (message.sender === me) {
-            $('#sent').append(`
+                if (message.sender === me) {
+                    $('#sent').append(`
             <div class="card">
                 <div class="card-body">
                     To: ${message.to}
@@ -88,23 +88,24 @@ function setSent(messages) {
                 </div>
             </div>
             `)
-            }
+                }
             })
         }
     })
 }
 
-function setSelect(messages) {
-    $.ajax('/api/users',{
-        method:"GET",
+function setSelect() {
+    $.ajax('/api/users', {
+        method: "GET",
         contentType: "application/json; charset=utf-8",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         success: (users) => {
+            console.log("users", users)
             $('#select').html('')
             users.map(user => {
-            $('#select').append(`<option value="${user.id}">${user.username}</option>`)
+                $('#select').append(`<option value="${user.id}">${user.username}</option>`)
             })
         }
     })
@@ -117,8 +118,8 @@ function sendMessage() {
         to: userid,
         message: message
     }
-    $.ajax('/api/messages',{
-        method:"POST",
+    $.ajax('/api/messages', {
+        method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         headers: {
