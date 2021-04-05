@@ -122,8 +122,8 @@ app.get(`/${API}/users`, async (req, res) => {
 			if (err) throw err
 			console.log("USERS REQUESTED", users)
 			//Sanitize
-			let newUsers = users.map(user => { delete user.password })
-
+			let newUsers = users.map(user => delete user.password )
+			console.log("USERS SANITIZED", newUsers)
 			res.status(200)
 			res.send(newUsers)
 		})
