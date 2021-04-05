@@ -116,7 +116,7 @@ function setSent(messages) {
 function setAll(messages) {
         $('#all').html('')
         messages.map(message => {
-                $('#sent').append(`
+                $('#all').append(`
         <div class="card">
             <div class="card-body">
                 To: ${message.to}
