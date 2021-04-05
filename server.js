@@ -120,13 +120,12 @@ app.get(`/${API}/users`, async (req, res) => {
 
 		con.query(sql, (err, users) => {
 			if (err) throw err
-			res.status(200)
 			console.log("USERS REQUESTED", users)
-
 			//Sanitize
-			users = users.map(user => { delete user.password })
+			newUsers = users.map(user => { delete user.password })
 
-			res.send(users)
+			res.status(200)
+			res.send(newUsers)
 		})
 	}
 	catch (e) {
