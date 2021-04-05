@@ -179,6 +179,22 @@ app.post(`/${API}/me`, (req, res) => {
 	}
 })
 
+app.post(`/${API}/role`, (req, res) => {
+	try {
+		let token = req.headers["authorization"].split(" ")[1]
+		console.log("headers", req.headers)
+		console.log("token recieved", token)
+		token = jwt.verify(token, SECRETKEY)
+		res.status(200)
+		console.log("ROLE REQUESTED", token.role)
+		res.send(token.role)
+	} catch (e) {
+		console.log(e)
+		res.status(401)
+		res.send("Not authorized")
+	}
+})
+
 app.listen(PORT, () => {
 	console.log(`The application has started on ${PORT}`)
 })

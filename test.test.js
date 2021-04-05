@@ -133,6 +133,20 @@ test("Check your own name", async () => {
 	expect(response.data).toBe("Kareem")
 })
 
+test("Check your own role", async () => {
+	let response = null
+	async function checkRole() {
+		response = await axios.post(
+			`http://localhost/${API}/role`,
+			{ username: "Kareem", password: "kareemtest" },
+			{ headers: params() }
+		)
+	}
+
+	await checkRole()
+	expect(response.data).toBe("admin")
+})
+
 test("Get all users except yourself", async () => {
 	let response = null
 	async function getUsers() {

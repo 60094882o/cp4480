@@ -2,7 +2,7 @@ let token = localStorage.getItem("token")
 
 if (!token && window.location.pathname !== "/") window.location.replace("/");
 
-if (token && window.location.pathname === "/user.html") {
+if (token && (window.location.pathname === "/user.html" || window.location.pathname === "/admin.html")) {
     getYourMessages()
 }
 
@@ -19,8 +19,23 @@ const login = () => {
         contentType: "application/json; charset=utf-8",
         success: (msg) => {
             localStorage.setItem("token", msg);
-            console.log("Token", localStorage.getItem("token"))
-            window.location.replace("/user.html");
+            redirect()
+        }
+    })
+}
+
+function redirect() {
+    $.ajax('/api/role', {
+        method: "POST",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        success: (role) => {
+            if (role === "admin")
+                window.location.pathname="/admin.html"
+            else if (role === "user")
+                window.location.pathname="/user.html"
         }
     })
 }
