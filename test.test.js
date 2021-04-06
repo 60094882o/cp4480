@@ -24,7 +24,6 @@ let params = () => {
 test("Logging in as user", async () => {
 	async function login() {
 		let response = await axios.post(`http://localhost:8081/${API}/login`, { username: "Omar", password: "omartest" })
-		console.log("RESPONSE", response)
 		token = response.data
 	}
 	await login()
@@ -39,8 +38,9 @@ test("Send message as a user", async () => {
 		response = await axios.post(
 			`http://localhost:8081/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
-
+			{ headers: params() }
 		)
+		console.log("RESPONSE", response)
 	}
 	await sendMessageAsUser()
 	expect(response.data).toBe("Message sent")
