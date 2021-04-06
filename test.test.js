@@ -1,5 +1,6 @@
 const axios = require("axios")
 const dotenv = require("dotenv")
+const puppeteer = require("puppeteer")
 // const mysql = require("mysql")
 dotenv.config()
 
@@ -159,4 +160,23 @@ test("Get all users except yourself", async () => {
 
 	await getUsers()
 	expect(response.data.length).toBe(2)
+})
+
+let started = false
+let browser, page
+async function start() {
+	browser = await puppeteer.launch()
+	page = await browser.newPage()
+	started = true
+}
+
+
+test("Visit page", async () => {
+	if (!started)
+		await start()
+	let url = null
+	await page.goto("http://localhost")
+	url = await page.url()
+	console.log("URL", url)
+	expect(url !== null && url !== undefined).toBe(true)
 })
