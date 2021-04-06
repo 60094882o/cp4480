@@ -166,11 +166,25 @@ test("Visit page", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
 	await page.goto("http://localhost")
-	let url = await page.url()
-	let username = await page.focus("#username")
-	let selector = await page.focus("#notASelector")
-	console.log("URL", url)
-	console.log("username", username)
-	console.log("not there", selector)
+	let url = page.url()
+	await browser.close()
 	expect(url !== null && url !== undefined).toBe(true)
+})
+
+test("Visit page and look for non existent selector", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost")
+
+	let errored = false
+	try {
+		await page.focus("#username")
+		await page.focus("#notASelector")
+	} catch (error) {
+		console.log("the error",error)
+		errored = true
+	}
+
+	await browser.close()
+	expect(errored).toBe(true)
 })
