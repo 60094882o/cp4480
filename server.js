@@ -24,12 +24,12 @@ let con = mysql.createConnection({
 })
 
 app.post(`/${API}/login`, (req, res) => {
+	res.set("Access-Control-Allow-Headers","Authorization")
 	console.log(req.body)
 	let u = req.body.username
 	let p = req.body.password
 	if (!u || !p) {
 		res.status(400)
-		res.set("access-control-allow-headers","*")
 		res.send("Bad Request")
 		return
 	}
@@ -47,13 +47,11 @@ app.post(`/${API}/login`, (req, res) => {
 					role: user.role
 				}
 				let token = jwt.sign(userInfo, SECRETKEY)
-				res.set("access-control-allow-headers","*")
 				res.status(200)
 				res.send(token)
 				return
 			} else {
 				res.status(401)
-				res.set("access-control-allow-headers","*")
 				res.send("not authorized")
 				return
 			}
@@ -62,6 +60,7 @@ app.post(`/${API}/login`, (req, res) => {
 })
 
 app.get(`/${API}/messages`, async (req, res) => {
+	
 	try {
 		console.log("headers", req.headers)
 		let token = req.headers["authorization"].split(" ")[1]
@@ -131,11 +130,11 @@ app.get(`/${API}/users`, async (req, res) => {
 })
 
 app.post(`/${API}/messages`, (req, res) => {
+	res.set("Access-Control-Allow-Headers","Authorization")
 	let t = req.body.to
 	let m = req.body.message
 	if (!t || !m) {
 		res.status(400)
-		res.set("access-control-allow-headers","authorization")
 		res.send("Bad Request")
 		return
 	}
@@ -150,14 +149,12 @@ app.post(`/${API}/messages`, (req, res) => {
 		con.query(sql, (err) => {
 			if (err) throw err
 			res.status(200)
-			res.set("access-control-allow-headers","authorization")
 			res.send("Message sent")
 		})
 	}
 	catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","authorization")
 		res.send("Not authorized")
 	}
 })
