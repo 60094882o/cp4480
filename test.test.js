@@ -170,6 +170,10 @@ async function start() {
 	started = true
 }
 
+async function closeBrowser() {
+	if (started) 
+		browser.close()
+}
 
 test("Visit page", async () => {
 	if (!started)
@@ -179,4 +183,8 @@ test("Visit page", async () => {
 	url = await page.url()
 	console.log("URL", url)
 	expect(url !== null && url !== undefined).toBe(true)
+})
+
+afterEach(() => {
+	closeBrowser()
 })
