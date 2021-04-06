@@ -60,7 +60,7 @@ app.post(`/${API}/login`, (req, res) => {
 })
 
 app.get(`/${API}/messages`, async (req, res) => {
-	
+	res.set("Access-Control-Allow-Headers","Authorization")
 	try {
 		console.log("headers", req.headers)
 		let token = req.headers["authorization"].split(" ")[1]
@@ -90,19 +90,18 @@ app.get(`/${API}/messages`, async (req, res) => {
 			})
 
 			res.status(200)
-			res.set("access-control-allow-headers","*")
 			console.log("MESSAGES REQUESTED", newMessages)
 			res.send(newMessages)
 		})
 	}
 	catch (e) {
 		res.status(401)
-		res.set("access-control-allow-headers","*")
 		res.send("not authorized")
 	}
 })
 
 app.get(`/${API}/users`, async (req, res) => {
+	res.set("Access-Control-Allow-Headers","Authorization")
 	try {
 		console.log("headers", req.headers)
 		let token = req.headers["authorization"].split(" ")[1]
@@ -118,7 +117,6 @@ app.get(`/${API}/users`, async (req, res) => {
 			let newUsers = users.map(user => {delete user.password; return user} )
 			console.log("USERS SANITIZED", newUsers)
 			res.status(200)
-			res.set("access-control-allow-headers","*")
 			res.send(newUsers)
 		})
 	}
