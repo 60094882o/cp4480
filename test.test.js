@@ -192,12 +192,9 @@ test("Login using form as user", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
 	await page.goto("http://localhost")
-
-	let username = await page.focus("#username")
-	let password = await page.focus("#password")
 	
-	await page.type(username,"Omar")
-	await page.type(password,"omaromar")
+	await page.type("#username","Omar")
+	await page.type("#password","omaromar")
 	await page.click("submitButton")
 
 	await page.waitForNavigation()
@@ -224,12 +221,9 @@ test("Login using form as admin", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
 	await page.goto("http://localhost")
-
-	let username = await page.focus("#username")
-	let password = await page.focus("#password")
 	
-	await page.type(username,"kareem")
-	await page.type(password,"kareemkareem")
+	await page.type("#username","kareem")
+	await page.type("#password","kareemkareem")
 	await page.click("submitButton")
 
 	await page.waitForNavigation()
