@@ -23,18 +23,6 @@ let con = mysql.createConnection({
 	database: DATABASE
 })
 
-app.get("/", (req, res) => {
-	console.log("Connected!")
-	con.query("select * from users;", (e, users) => {
-		if (e) throw e
-		if (users.length > 0) {
-			res.status(200)
-			res.set("access-control-allow-headers","Authorization")
-			res.send(users)
-		}
-	})
-})
-
 app.post(`/${API}/login`, (req, res) => {
 	console.log(req.body)
 	let u = req.body.username
