@@ -128,7 +128,7 @@ app.get(`/${API}/users`, async (req, res) => {
 })
 
 app.post(`/${API}/messages`, (req, res) => {
-	res.set("Access-Control-Allow-Headers","Authorization")
+
 	let t = req.body.to
 	let m = req.body.message
 	if (!t || !m) {

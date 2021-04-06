@@ -123,7 +123,7 @@ function setAll(messages) {
                 Message: ${message.message}
             </div>
         </div>
-        `)  
+        `)
     })
 }
 
