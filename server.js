@@ -135,7 +135,7 @@ app.post(`/${API}/messages`, (req, res) => {
 	let m = req.body.message
 	if (!t || !m) {
 		res.status(400)
-		res.set("access-control-allow-headers","*")
+		res.set("access-control-allow-headers","Authorization")
 		res.send("Bad Request")
 		return
 	}
@@ -150,14 +150,14 @@ app.post(`/${API}/messages`, (req, res) => {
 		con.query(sql, (err) => {
 			if (err) throw err
 			res.status(200)
-			res.set("access-control-allow-headers","*")
+			res.set("access-control-allow-headers","Authorization")
 			res.send("Message sent")
 		})
 	}
 	catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","*")
+		res.set("access-control-allow-headers","Authorization")
 		res.send("Not authorized")
 	}
 })
@@ -191,7 +191,7 @@ app.post(`/${API}/role`, (req, res) => {
 	} catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","*")
+		res.set("access-control-allow-headers","Authorization")
 		res.send("Not authorized")
 	}
 })
