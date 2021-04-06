@@ -24,7 +24,6 @@ let con = mysql.createConnection({
 })
 
 app.post(`/${API}/login`, (req, res) => {
-	res.set("Access-Control-Allow-Headers","Authorization")
 	console.log(req.body)
 	let u = req.body.username
 	let p = req.body.password
@@ -60,7 +59,6 @@ app.post(`/${API}/login`, (req, res) => {
 })
 
 app.get(`/${API}/messages`, async (req, res) => {
-	res.set("Access-Control-Allow-Headers","Authorization")
 	try {
 		console.log("headers", req.headers)
 		let token = req.headers["authorization"].split(" ")[1]
@@ -101,7 +99,6 @@ app.get(`/${API}/messages`, async (req, res) => {
 })
 
 app.get(`/${API}/users`, async (req, res) => {
-	res.set("Access-Control-Allow-Headers","Authorization")
 	try {
 		console.log("headers", req.headers)
 		let token = req.headers["authorization"].split(" ")[1]
