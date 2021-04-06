@@ -14,7 +14,11 @@ const API = process.env.API
 
 let token = null
 
-let params = () => { return { "Authorization": `Bearer ${token}` } }
+let params = () => { return { 
+	"Authorization": `Bearer ${token}`,
+	"Access-Control-Request-Headers":"Authorization" 
+} 
+}
 
 test("Logging in as user", async () => {
 	async function login() {
