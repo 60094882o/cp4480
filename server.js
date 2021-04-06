@@ -144,7 +144,7 @@ app.post(`/${API}/messages`, (req, res) => {
 		con.query(sql, (err) => {
 			if (err) throw err
 			res.status(200)
-			res.send("Message not sent")
+			res.send("Message sent")
 		})
 	}
 	catch (e) {
