@@ -259,11 +259,10 @@ test("Send a message", async () => {
 	await page.click("#submitButton")
 
 	await page.reload()
+	// Wait for JS script to update page DOM
 	await page.waitForTimeout(2000)
 
 	let content = await page.content()
-	console.log("CONTENT", content)
-	console.log("SPOT", content.indexOf("This message is from puppeteer"))
 	let found = false
 	if (content.indexOf("This message is from puppeteer") !== -1)
 		found = true
