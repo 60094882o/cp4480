@@ -1,16 +1,10 @@
 const axios = require("axios")
 const dotenv = require("dotenv")
 const puppeteer = require("puppeteer")
-// const mysql = require("mysql")
+
 dotenv.config()
 
-
-// const DATABASE = process.env.DATABASE
-// const PASSWORD = process.env.PASSWORD
-// const SECRETKEY = process.env.SECRETKEY
-// const PORT = process.env.PORT
 const API = process.env.API
-// const USER = process.env.USER
 
 let token = null
 
@@ -40,7 +34,6 @@ test("Send message as a user", async () => {
 			{ to: "2", message: "How you doing?" },
 			{ headers: params() }
 		)
-		console.log("RESPONSE", response)
 	}
 	await sendMessageAsUser()
 	expect(response.data).toBe("Message sent")
@@ -268,7 +261,8 @@ test("Send a message", async () => {
 	await page.reload()
 
 	let content = await page.content()
-
+	console.log("CONTENT", content)
+	console.log("SPOT", content.indexOf("This message is from puppeteer"))
 	let found = false
 	if (content.indexOf("This message is from puppeteer") !== -1)
 		found = true
