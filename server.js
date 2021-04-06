@@ -173,7 +173,7 @@ app.post(`/${API}/me`, (req, res) => {
 
 app.post(`/${API}/role`, (req, res) => {
 	try {
-		let token = req.headers["authorization"].split(" ")[1]
+			let token = req.headers["authorization"].split(" ")[1]
 		console.log("headers", req.headers)
 		console.log("token recieved", token)
 		token = jwt.verify(token, SECRETKEY)
