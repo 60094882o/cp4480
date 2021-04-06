@@ -177,14 +177,76 @@ test("Visit page and look for non existent selector", async () => {
 	await page.goto("http://localhost")
 
 	let errored = false
+	await page.focus("#username")
 	try {
-		await page.focus("#username")
 		await page.focus("#notASelector")
 	} catch (error) {
-		console.log("the error",error)
 		errored = true
 	}
 
 	await browser.close()
 	expect(errored).toBe(true)
+})
+
+test("Login using form as user", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost")
+
+	let username = await page.focus("#username")
+	let password = await page.focus("#password")
+	
+	await page.type(username,"Omar")
+	await page.type(password,"omaromar")
+	await page.click("submitButton")
+
+	await page.waitForNavigation()
+
+	let errors = 0
+	try {
+		await page.focus("#sent")
+	} catch (error) {
+		errors++
+	}
+
+	// Should fail because not admin logging in
+	try {
+		await page.focus("#all")
+	} catch (error) {
+		errors++
+	}
+
+	await browser.close()
+	expect(errors).toBe(1)
+})
+
+test("Login using form as admin", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost")
+
+	let username = await page.focus("#username")
+	let password = await page.focus("#password")
+	
+	await page.type(username,"kareem")
+	await page.type(password,"kareemkareem")
+	await page.click("submitButton")
+
+	await page.waitForNavigation()
+
+	let errors = 0
+	try {
+		await page.focus("#sent")
+	} catch (error) {
+		errors++
+	}
+
+	try {
+		await page.focus("#all")
+	} catch (error) {
+		errors++
+	}
+
+	await browser.close()
+	expect(errors).toBe(0)
 })
