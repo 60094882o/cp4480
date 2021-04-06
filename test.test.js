@@ -259,6 +259,7 @@ test("Send a message", async () => {
 	await page.click("#submitButton")
 
 	await page.reload()
+	await page.waitForTimeout(2000)
 
 	let content = await page.content()
 	console.log("CONTENT", content)
