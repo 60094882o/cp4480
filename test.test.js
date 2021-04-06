@@ -162,29 +162,13 @@ test("Get all users except yourself", async () => {
 	expect(response.data.length).toBe(2)
 })
 
-let started = false
-let browser, page
-async function start() {
-	browser = await puppeteer.launch()
-	page = await browser.newPage()
-	started = true
-}
-
-async function closeBrowser() {
-	if (started) 
-		browser.close()
-}
-
 test("Visit page", async () => {
-	if (!started)
-		await start()
-	let url = null
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
 	await page.goto("http://localhost")
-	url = await page.url()
+	let url = await page.url()
+	let content = await page.content()
 	console.log("URL", url)
+	console.log("content", content)
 	expect(url !== null && url !== undefined).toBe(true)
-})
-
-afterEach(() => {
-	closeBrowser()
 })
