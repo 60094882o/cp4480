@@ -29,7 +29,7 @@ app.post(`/${API}/login`, (req, res) => {
 	let p = req.body.password
 	if (!u || !p) {
 		res.status(400)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("Bad Request")
 		return
 	}
@@ -47,13 +47,13 @@ app.post(`/${API}/login`, (req, res) => {
 					role: user.role
 				}
 				let token = jwt.sign(userInfo, SECRETKEY)
-				res.set("access-control-allow-headers","Authorization")
+				res.set("access-control-allow-headers","*")
 				res.status(200)
 				res.send(token)
 				return
 			} else {
 				res.status(401)
-				res.set("access-control-allow-headers","Authorization")
+				res.set("access-control-allow-headers","*")
 				res.send("not authorized")
 				return
 			}
@@ -91,14 +91,14 @@ app.get(`/${API}/messages`, async (req, res) => {
 			})
 
 			res.status(200)
-			res.set("access-control-allow-headers","Authorization")
+			res.set("access-control-allow-headers","*")
 			console.log("MESSAGES REQUESTED", newMessages)
 			res.send(newMessages)
 		})
 	}
 	catch (e) {
 		res.status(401)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("not authorized")
 	}
 })
@@ -119,13 +119,13 @@ app.get(`/${API}/users`, async (req, res) => {
 			let newUsers = users.map(user => {delete user.password; return user} )
 			console.log("USERS SANITIZED", newUsers)
 			res.status(200)
-			res.set("access-control-allow-headers","Authorization")
+			res.set("access-control-allow-headers","*")
 			res.send(newUsers)
 		})
 	}
 	catch (e) {
 		res.status(401)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("not authorized")
 	}
 })
@@ -135,7 +135,7 @@ app.post(`/${API}/messages`, (req, res) => {
 	let m = req.body.message
 	if (!t || !m) {
 		res.status(400)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("Bad Request")
 		return
 	}
@@ -150,14 +150,14 @@ app.post(`/${API}/messages`, (req, res) => {
 		con.query(sql, (err) => {
 			if (err) throw err
 			res.status(200)
-			res.set("access-control-allow-headers","Authorization")
+			res.set("access-control-allow-headers","*")
 			res.send("Message sent")
 		})
 	}
 	catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("Not authorized")
 	}
 })
@@ -174,7 +174,7 @@ app.post(`/${API}/me`, (req, res) => {
 	} catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("Not authorized")
 	}
 })
@@ -191,7 +191,7 @@ app.post(`/${API}/role`, (req, res) => {
 	} catch (e) {
 		console.log(e)
 		res.status(401)
-		res.set("access-control-allow-headers","Authorization")
+		res.set("access-control-allow-headers","*")
 		res.send("Not authorized")
 	}
 })
