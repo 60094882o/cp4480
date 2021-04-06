@@ -18,7 +18,7 @@ let params = () => { return { "Authorization": `Bearer ${token}` } }
 
 test("Logging in as user", async () => {
 	async function login() {
-		let response = await axios.post(`http://localhost/${API}/login`, { username: "Omar", password: "omartest" })
+		let response = await axios.post(`http://localhost:8081/${API}/login`, { username: "Omar", password: "omartest" })
 		token = response.data
 	}
 	await login()
@@ -31,7 +31,7 @@ test("Send message as a user", async () => {
 	let response = null
 	async function sendMessageAsUser() {
 		response = await axios.post(
-			`http://localhost/${API}/messages`,
+			`http://localhost:8081/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
 			{ headers: params() }
 		)
@@ -42,7 +42,7 @@ test("Send message as a user", async () => {
 
 test("Logging in as an admin", async () => {
 	async function login() {
-		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+		let login = await axios.post(`http://localhost:8081/${API}/login`, { username: "Kareem", password: "kareemtest" })
 		token = login.data
 	}
 	await login()
@@ -55,7 +55,7 @@ test("Send message as an admin", async () => {
 	let response = null
 	async function sendMessageAsAdmin() {
 		response = await axios.post(
-			`http://localhost/${API}/messages`,
+			`http://localhost:8081/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
 			{ headers: params() }
 		)
@@ -67,23 +67,23 @@ test("Send message as an admin", async () => {
 test("Read your messages as a user", async () => {
 	let response = null
 	async function readMessagesAsUser() {
-		await axios.post(`http://localhost/${API}/messages`, {
+		await axios.post(`http://localhost:8081/${API}/messages`, {
 			to: "1",
 			message: "This is the second message"
 		}, { headers: params() })
 
-		await axios.post(`http://localhost/${API}/messages`, {
+		await axios.post(`http://localhost:8081/${API}/messages`, {
 			to: "2",
 			message: "This is another message for another user"
 		}, { headers: params() })
 
 
-		let login = await axios.post(`http://localhost/${API}/login`, { username: "Ahmed", password: "ahmedtest" })
+		let login = await axios.post(`http://localhost:8081/${API}/login`, { username: "Ahmed", password: "ahmedtest" })
 		token = login.data
 
 		response = await axios({
 			method: "get",
-			url: `http://localhost/${API}/messages`,
+			url: `http://localhost:8081/${API}/messages`,
 			headers: params()
 		})
 	}
@@ -95,23 +95,23 @@ test("Read your messages as a user", async () => {
 test("Read your messages as an admin", async () => {
 	let response = null
 	async function readMessagesAsAdmin() {
-		await axios.post(`http://localhost/${API}/messages`, {
+		await axios.post(`http://localhost:8081/${API}/messages`, {
 			to: "1",
 			message: "This is the second message"
 		}, { headers: params() })
 
-		await axios.post(`http://localhost/${API}/messages`, {
+		await axios.post(`http://localhost:8081/${API}/messages`, {
 			to: "2",
 			message: "This is another message for another user"
 		}, { headers: params() })
 
 
-		let login = await axios.post(`http://localhost/${API}/login`, { username: "Kareem", password: "kareemtest" })
+		let login = await axios.post(`http://localhost:8081/${API}/login`, { username: "Kareem", password: "kareemtest" })
 		token = login.data
 
 		response = await axios({
 			method: "get",
-			url: `http://localhost/${API}/messages`,
+			url: `http://localhost:8081/${API}/messages`,
 			headers: params()
 		})
 	}
@@ -124,7 +124,7 @@ test("Check your own name", async () => {
 	let response = null
 	async function checkName() {
 		response = await axios.post(
-			`http://localhost/${API}/me`,
+			`http://localhost:8081/${API}/me`,
 			{ username: "Kareem", password: "kareemtest" },
 			{ headers: params() }
 		)
@@ -138,7 +138,7 @@ test("Check your own role", async () => {
 	let response = null
 	async function checkRole() {
 		response = await axios.post(
-			`http://localhost/${API}/role`,
+			`http://localhost:8081/${API}/role`,
 			{ username: "Kareem", password: "kareemtest" },
 			{ headers: params() }
 		)
@@ -153,7 +153,7 @@ test("Get all users except yourself", async () => {
 	async function getUsers() {
 		response = await axios({
 			method: "get",
-			url: `http://localhost/${API}/users`,
+			url: `http://localhost:8081/${API}/users`,
 			headers: params()
 		})
 	}
@@ -165,7 +165,7 @@ test("Get all users except yourself", async () => {
 test("Visit page", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
-	await page.goto("http://localhost")
+	await page.goto("http://localhost:8081")
 	let url = page.url()
 	await browser.close()
 	expect(url !== null && url !== undefined).toBe(true)
@@ -174,7 +174,7 @@ test("Visit page", async () => {
 test("Visit page and look for non existent selector", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
-	await page.goto("http://localhost")
+	await page.goto("http://localhost:8081")
 
 	let errored = false
 	await page.focus("#username")
@@ -191,7 +191,7 @@ test("Visit page and look for non existent selector", async () => {
 test("Login using form as user", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
-	await page.goto("http://localhost")
+	await page.goto("http://localhost:8081")
 	
 	await page.type("#username","Omar")
 	await page.type("#password","omaromar")
@@ -220,7 +220,7 @@ test("Login using form as user", async () => {
 test("Login using form as admin", async () => {
 	let browser = await puppeteer.launch()
 	let page = await browser.newPage()
-	await page.goto("http://localhost")
+	await page.goto("http://localhost:8081")
 	
 	await page.type("#username","kareem")
 	await page.type("#password","kareemkareem")
@@ -244,3 +244,20 @@ test("Login using form as admin", async () => {
 	await browser.close()
 	expect(errors).toBe(0)
 })
+
+// test("Send a message to a user", async () => {
+// 	let browser = await puppeteer.launch()
+// 	let page = await browser.newPage()
+// 	await page.goto("http://localhost:8081")
+	
+// 	await page.type("#username","Omar")
+// 	await page.type("#password","omaromar")
+// 	await page.click("#submitButton")
+
+// 	await page.waitForNavigation()
+
+// 	await page.type("#message", "This message is from puppeteer")
+
+// 	await browser.close()
+// 	expect(errors).toBe(0)
+// })
