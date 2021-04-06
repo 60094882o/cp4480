@@ -200,7 +200,7 @@ test("Login using form as user", async () => {
 	await page.goto("http://localhost:8081")
 
 	await page.type("#username","Omar")
-	await page.type("#password","omaromar")
+	await page.type("#password","omartest")
 	await page.click("#submitButton")
 
 	await page.waitForNavigation()
@@ -228,8 +228,8 @@ test("Login using form as admin", async () => {
 	let page = await browser.newPage()
 	await page.goto("http://localhost:8081")
 
-	await page.type("#username","kareem")
-	await page.type("#password","kareemkareem")
+	await page.type("#username","Kareem")
+	await page.type("#password","kareemtest")
 	await page.click("#submitButton")
 
 	await page.waitForNavigation()
@@ -257,7 +257,7 @@ test("Send a message", async () => {
 	await page.goto("http://localhost:8081")
 
 	await page.type("#username","Omar")
-	await page.type("#password","omaromar")
+	await page.type("#password","omartest")
 	await page.click("#submitButton")
 
 	await page.waitForNavigation()
