@@ -14,15 +14,17 @@ const API = process.env.API
 
 let token = null
 
-let params = () => { return { 
-	"Authorization": `Bearer ${token}`,
-	"Access-Control-Request-Headers":"Authorization" 
-} 
+let params = () => {
+	return {
+		"Authorization": `Bearer ${token}`,
+		"Access-Control-Request-Headers": "Authorization"
+	}
 }
 
 test("Logging in as user", async () => {
 	async function login() {
 		let response = await axios.post(`http://localhost:8081/${API}/login`, { username: "Omar", password: "omartest" })
+		console.log("RESPONSE", response)
 		token = response.data
 	}
 	await login()
@@ -37,7 +39,7 @@ test("Send message as a user", async () => {
 		response = await axios.post(
 			`http://localhost:8081/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
-			
+
 		)
 	}
 	await sendMessageAsUser()
@@ -196,7 +198,7 @@ test("Get all users except yourself", async () => {
 // 	let browser = await puppeteer.launch()
 // 	let page = await browser.newPage()
 // 	await page.goto("http://localhost:8081")
-	
+
 // 	await page.type("#username","Omar")
 // 	await page.type("#password","omaromar")
 // 	await page.click("#submitButton")
@@ -225,7 +227,7 @@ test("Get all users except yourself", async () => {
 // 	let browser = await puppeteer.launch()
 // 	let page = await browser.newPage()
 // 	await page.goto("http://localhost:8081")
-	
+
 // 	await page.type("#username","kareem")
 // 	await page.type("#password","kareemkareem")
 // 	await page.click("#submitButton")
@@ -253,7 +255,7 @@ test("Get all users except yourself", async () => {
 // 	let browser = await puppeteer.launch()
 // 	let page = await browser.newPage()
 // 	await page.goto("http://localhost:8081")
-	
+
 // 	await page.type("#username","Omar")
 // 	await page.type("#password","omaromar")
 // 	await page.click("#submitButton")
