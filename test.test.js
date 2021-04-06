@@ -195,7 +195,7 @@ test("Login using form as user", async () => {
 	
 	await page.type("#username","Omar")
 	await page.type("#password","omaromar")
-	await page.click("submitButton")
+	await page.click("#submitButton")
 
 	await page.waitForNavigation()
 
@@ -224,7 +224,7 @@ test("Login using form as admin", async () => {
 	
 	await page.type("#username","kareem")
 	await page.type("#password","kareemkareem")
-	await page.click("submitButton")
+	await page.click("#submitButton")
 
 	await page.waitForNavigation()
 
