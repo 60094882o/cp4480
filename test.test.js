@@ -1,6 +1,6 @@
 const axios = require("axios")
 const dotenv = require("dotenv")
-// const puppeteer = require("puppeteer")
+const puppeteer = require("puppeteer")
 // const mysql = require("mysql")
 dotenv.config()
 
@@ -168,102 +168,112 @@ test("Get all users except yourself", async () => {
 	expect(response.data.length).toBe(2)
 })
 
-// test("Visit page", async () => {
-// 	let browser = await puppeteer.launch()
-// 	let page = await browser.newPage()
-// 	await page.goto("http://localhost:8081")
-// 	let url = page.url()
-// 	await browser.close()
-// 	expect(url !== null && url !== undefined).toBe(true)
-// })
+test("Visit page", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost:8081")
+	let url = page.url()
+	await browser.close()
+	expect(url !== null && url !== undefined).toBe(true)
+})
 
-// test("Visit page and look for non existent selector", async () => {
-// 	let browser = await puppeteer.launch()
-// 	let page = await browser.newPage()
-// 	await page.goto("http://localhost:8081")
+test("Visit page and look for non existent selector", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost:8081")
 
-// 	let errored = false
-// 	await page.focus("#username")
-// 	try {
-// 		await page.focus("#notASelector")
-// 	} catch (error) {
-// 		errored = true
-// 	}
+	let errored = false
+	await page.focus("#username")
+	try {
+		await page.focus("#notASelector")
+	} catch (error) {
+		errored = true
+	}
 
-// 	await browser.close()
-// 	expect(errored).toBe(true)
-// })
+	await browser.close()
+	expect(errored).toBe(true)
+})
 
-// test("Login using form as user", async () => {
-// 	let browser = await puppeteer.launch()
-// 	let page = await browser.newPage()
-// 	await page.goto("http://localhost:8081")
+test("Login using form as user", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost:8081")
 
-// 	await page.type("#username","Omar")
-// 	await page.type("#password","omaromar")
-// 	await page.click("#submitButton")
+	await page.type("#username","Omar")
+	await page.type("#password","omaromar")
+	await page.click("#submitButton")
 
-// 	await page.waitForNavigation()
+	await page.waitForNavigation()
 
-// 	let errors = 0
-// 	try {
-// 		await page.focus("#sent")
-// 	} catch (error) {
-// 		errors++
-// 	}
+	let errors = 0
+	try {
+		await page.focus("#sent")
+	} catch (error) {
+		errors++
+	}
 
-// 	// Should fail because not admin logging in
-// 	try {
-// 		await page.focus("#all")
-// 	} catch (error) {
-// 		errors++
-// 	}
+	// Should fail because not admin logging in
+	try {
+		await page.focus("#all")
+	} catch (error) {
+		errors++
+	}
 
-// 	await browser.close()
-// 	expect(errors).toBe(1)
-// })
+	await browser.close()
+	expect(errors).toBe(1)
+})
 
-// test("Login using form as admin", async () => {
-// 	let browser = await puppeteer.launch()
-// 	let page = await browser.newPage()
-// 	await page.goto("http://localhost:8081")
+test("Login using form as admin", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost:8081")
 
-// 	await page.type("#username","kareem")
-// 	await page.type("#password","kareemkareem")
-// 	await page.click("#submitButton")
+	await page.type("#username","kareem")
+	await page.type("#password","kareemkareem")
+	await page.click("#submitButton")
 
-// 	await page.waitForNavigation()
+	await page.waitForNavigation()
 
-// 	let errors = 0
-// 	try {
-// 		await page.focus("#sent")
-// 	} catch (error) {
-// 		errors++
-// 	}
+	let errors = 0
+	try {
+		await page.focus("#sent")
+	} catch (error) {
+		errors++
+	}
 
-// 	try {
-// 		await page.focus("#all")
-// 	} catch (error) {
-// 		errors++
-// 	}
+	try {
+		await page.focus("#all")
+	} catch (error) {
+		errors++
+	}
 
-// 	await browser.close()
-// 	expect(errors).toBe(0)
-// })
+	await browser.close()
+	expect(errors).toBe(0)
+})
 
-// test("Send a message to a user", async () => {
-// 	let browser = await puppeteer.launch()
-// 	let page = await browser.newPage()
-// 	await page.goto("http://localhost:8081")
+test("Send a message", async () => {
+	let browser = await puppeteer.launch()
+	let page = await browser.newPage()
+	await page.goto("http://localhost:8081")
 
-// 	await page.type("#username","Omar")
-// 	await page.type("#password","omaromar")
-// 	await page.click("#submitButton")
+	await page.type("#username","Omar")
+	await page.type("#password","omaromar")
+	await page.click("#submitButton")
 
-// 	await page.waitForNavigation()
+	await page.waitForNavigation()
 
-// 	await page.type("#message", "This message is from puppeteer")
+	await page.type("#message", "This message is from puppeteer")
+	await page.click("#submitButton")
 
-// 	await browser.close()
-// 	expect(errors).toBe(0)
-// })
+	await page.reload()
+
+	let content = await page.content()
+
+	let found = false
+	if (content.indexOf("This message is from puppeteer") !== -1)
+		found = true
+
+	await browser.close()
+
+	expect(found).toBe(true)
+})
