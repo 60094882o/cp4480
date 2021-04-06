@@ -33,7 +33,7 @@ test("Send message as a user", async () => {
 		response = await axios.post(
 			`http://localhost:8081/${API}/messages`,
 			{ to: "2", message: "How you doing?" },
-			{ headers: params() }
+			
 		)
 	}
 	await sendMessageAsUser()
